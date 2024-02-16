@@ -9,8 +9,7 @@ import { Region } from 'src/app/models/region';
 
 @Component({
   selector: 'addTripDialog',
-  templateUrl: './addTripDialog.component.html',
-  styleUrls: ['./addTripDialog.component.css']
+  templateUrl: './addTripDialog.component.html'
 })
 export class AddTripDialogComponent implements OnInit {
   trip: Trip

@@ -3,9 +3,12 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "TravelOrganiserToolAngular": {
+    "my-angular-project": {
       "projectType": "application",
       "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        },
         "@schematics/angular:application": {
           "strict": true
         }
@@ -17,17 +20,18 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/TravelOrganiserToolAngular",
+            "outputPath": "dist/my-angular-project",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/app/styles.scss"
             ],
             "scripts": []
           },
@@ -68,10 +72,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "TravelOrganiserToolAngular:build:production"
+              "browserTarget": "my-angular-project:build:production"
             },
             "development": {
-              "browserTarget": "TravelOrganiserToolAngular:build:development"
+              "browserTarget": "my-angular-project:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -79,7 +83,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "TravelOrganiserToolAngular:build"
+            "browserTarget": "my-angular-project:build"
           }
         },
         "test": {
@@ -89,12 +93,13 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
+            "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/app/styles.scss"
             ],
             "scripts": []
           }
@@ -102,5 +107,5 @@
       }
     }
   },
-  "defaultProject": "TravelOrganiserToolAngular"
+  "defaultProject": "my-angular-project"
 }

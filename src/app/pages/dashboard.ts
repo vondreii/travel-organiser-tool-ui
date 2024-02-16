@@ -5,8 +5,7 @@ import { Trip } from 'src/app/models/trip';
 
 @Component({
   selector: 'dashboard',
-  templateUrl: './dashboard.html',
-  styleUrls: ['./dashboard.css']
+  templateUrl: './dashboard.html'
 })
 export class TripsOverviewComponent implements OnInit {
   allTrips: Trip[] = [];
