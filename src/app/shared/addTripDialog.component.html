@@ -1,0 +1,58 @@
+<div class="overlay">
+  <div class="overlay-content">
+    <button class="exit-button" (click)="onCancelAddTrip()">X</button><br>
+    <h2>Add New Trip</h2>
+    <form (submit)="onSubmit()">
+
+      <!-- Name -->
+      <div class="form-group">
+        <label>Name:</label>
+        <input type="text" name="tripName" [(ngModel)]="trip.name" (change)="onInputChangeText(inputTypes.TripName)" [class.invalidField]="!pageFields[inputTypes.TripName].isValid" />
+      </div>
+      <p *ngIf="!pageFields[inputTypes.TripName].isValid" class="validationErrorMessage">Please enter a valid name</p>
+
+      <!-- Region -->
+      <div class="form-group">
+        <label>Region:</label>
+        <select id="regions" name="regions" [ngModel]="trip.regionID" (change)="onInputChangeDropdown(inputTypes.Region, $event)" [class.invalidField]="!pageFields[inputTypes.Region].isValid">
+            <option *ngIf="trip.regionID === 0" [value]="0" disabled>Please select</option>
+            <option *ngFor="let region of allRegions" [value]="region.id">{{ region.name }}</option>
+        </select>
+      </div>
+      <p *ngIf="!pageFields[inputTypes.Region].isValid" class="validationErrorMessage">Please select a region</p>
+
+      <!-- Country -->
+      <ng-container *ngIf="trip.regionID !== 0">
+        <div class="form-group">
+          <label>Country:</label>
+          <select id="countries" name="countries" [ngModel]="trip.countryID" (change)="onInputChangeDropdown(inputTypes.Country, $event)" [class.invalidField]="!pageFields[inputTypes.Country].isValid">
+              <option *ngIf="trip.countryID === 0" [value]="0" disabled>Please select</option>
+              <option *ngFor="let country of filteredCountries" [value]="country.id">{{ country.name }}</option>
+          </select>
+        </div>
+        <p *ngIf="!pageFields[inputTypes.Country].isValid" class="validationErrorMessage">Please select a country</p>
+      </ng-container>
+
+      <!-- Location -->
+      <ng-container *ngIf="trip.countryID !== 0">
+        <div class="form-group">
+          <label>Location:</label>
+          <select id="locations" name="locations" [(ngModel)]="trip.locationID" (change)="onInputChangeDropdown(inputTypes.Location, $event)" [class.invalidField]="!pageFields[inputTypes.Location].isValid">
+              <option *ngIf="trip.locationID === 0" [value]="0" disabled>Please select</option>
+              <option *ngFor="let location of filteredLocations" [value]="location.id">{{ location.name }}</option>
+          </select>
+        </div>
+        <p *ngIf="!pageFields[inputTypes.Location].isValid" class="validationErrorMessage">Please select a Location</p>
+      </ng-container>
+
+      <div class="form-group">
+        <button type="submit" class="custom-button">Add Trip</button>
+      </div>
+      
+      <div *ngIf="!isPageValid" class="pageValidationErrorMessage">
+        <p>Please review your inputs</p>
+      </div>
+
+    </form>
+  </div>
+</div>

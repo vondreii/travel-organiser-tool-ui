@@ -1,0 +1,61 @@
+.top {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.top div {
+  padding: 0px 20px 0px 0px;
+}
+
+.tripListContainer {
+  padding: 80px 50px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  font-family: Arial, sans-serif;
+}
+
+th {
+  background-color: #f2f2f2;
+  text-align: left;
+  padding: 20px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+td {
+  padding: 20px;
+}
+
+.plus-button {
+  background-color: #002431;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  text-align: center;
+  line-height: 40px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.card {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  display: flex;
+}
+
+.card p {
+  padding: 5px 10px;
+  flex: 30%;
+}

@@ -1,0 +1,28 @@
+<div class="tripListContainer">
+  <div class="top">
+    <div>
+      <h1>All Trips</h1>
+    </div>
+    <div>
+      <button class="plus-button" (click)="onAddTrip()">+</button>
+    </div>
+  </div>
+
+  <!-- Filters - temporary. Fix later -->
+  <p>Trip Name</p>
+  <input type="text" id="filterTripName" [ngModel]="selectedFilterName" (ngModelChange)="filterTable($event, 'name')">
+
+  <p>Trip Location</p>
+  <input type="text" id="filterLocation" [ngModel]="selectedFilterLocation" (ngModelChange)="filterTable($event, 'location')">
+
+  <br><br><br><br>
+
+  <div class="card" *ngFor="let trip of filteredTrips">
+    <p>{{trip.name}}</p>
+    <p>{{trip.locationName}}</p>
+    <p>{{trip.countryName}}</p>
+    <p>{{trip.regionName}}</p>
+  </div>
+
+  <addTripDialog *ngIf="dialogService.isDialogOpen" (itemAdded)="loadData()"></addTripDialog>
+</div>
