@@ -1,82 +1,61 @@
-/* You can add global styles to this file, and also import other style files */
+// #region all
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: Arial, sans-serif;
 }
+// #endregion
 
-.dashboard {
+// #region dashboard
+.dashboard-component {
   padding: 60px 10%; 
-  .top {
+
+  .header {
     margin-bottom: 20px;
     display: flex;
     justify-content: space-between;
+
+    div {
+      padding: 0px 20px 0px 0px;
+    }
+
+    .plusButton {
+      background-color: #002431;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 24px;
+      text-align: center;
+      line-height: 40px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
   }
 
-  .top div {
-    padding: 0px 20px 0px 0px;
+  .filters {
+    margin-bottom: 60px;
   }
 
-  .tripListContainer {
-    padding: 80px 50px;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-    font-family: Arial, sans-serif;
-  }
-
-  th {
-    background-color: #f2f2f2;
-    text-align: left;
-    padding: 20px;
-  }
-
-  tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-
-  td {
-    padding: 20px;
-  }
-
-  .plus-button {
-    background-color: #002431;
-    color: #fff;
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    font-size: 24px;
-    text-align: center;
-    line-height: 40px;
-    cursor: pointer;
-    margin-bottom: 20px;
-  }
-
-  .card {
+  .tripItem {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 20px;
     display: flex;
-  }
 
-  .card p {
-    padding: 5px 10px;
-    flex: 30%;
+    p {
+      padding: 5px 10px;
+      flex: 30%;
+    }
   }
 }
+// #endregion
 
-.addTripDialogComponent {
-  h2 {
-    margin-bottom: 20px;
-    margin-top: 20px;
-  }
-  
+// #region add-trip-dialog-component
+.add-trip-dialog-component {
   .overlay {
     position: fixed;
     top: 0;
@@ -88,95 +67,116 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
-  }
-  
-  .overlay-content {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  }
 
-  .form-group {
-    margin-bottom: 20px;
-  }
+    .content {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 
-  label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
+      .exitButton button {
+        background-color: red;
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        width: 25px;
+        float: right;
+        height: 25px;
+        font-size: 12px;
+        text-align: center;
+        cursor: pointer;
+        margin-bottom: 20px;
+      }
+      
+      h2 {
+        margin-bottom: 30px;
+      }
 
-  input[type="text"],
-  select {
-    width: 20rem;
-    /* TODO: 100% for small screens */
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-  }
+      .form-group {
+        margin-bottom: 20px;
 
-  .custom-button {
-    background-color: #002431;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 10px;
-  }
+        label {
+          display: block;
+          margin-bottom: 5px;
+          font-weight: bold;
+        }
+        
+        input[type="text"], select {
+          width: 20rem;
+          /* TODO: 100% for small screens */
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          font-size: 16px;
+        }
 
-  .custom-button:hover {
-    background-color: #0056b3;
-  }
+        .invalidInput {
+          border: 1px solid red !important;
+        }
 
-  .exit-button {
-    background-color: red;
-    float: right;
-    color: #fff;
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    font-size: 24px;
-    text-align: center;
-    line-height: 40px;
-    cursor: pointer;
-    margin-bottom: 20px;
-  }
+        .invalidMessage {
+          color: red;
+          margin-bottom: 20px;
+          margin-top: 5px;
+        }
+      }
 
-  .validationErrorMessage {
-    color: red;
-    margin-bottom: 20px;
-  }
+      .actionButtons {
+        margin-top: 30px;
+        margin-bottom: 20px;
 
-  .invalidField {
-    border: 1px solid red !important;
-  }
+        button {
+          border: none;
+          border-radius: 5px;
+          padding: 10px 20px;
+          font-size: 16px;
+          cursor: pointer;
+        }
 
-  .pageValidationErrorMessage {
-    background-color: pink;
-    border: 1px solid red !important;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 20px;
+        .addTrip {
+          background-color: #002431;
+          color: #fff;
+          margin-right: 20px;
+        }
+      
+        .addTrip:hover {
+          background-color: #0056b3;
+        }
+
+        .cancel {
+          background-color: whitesmoke;
+          color: black;
+        }
+
+        .cancel:hover {
+          background-color: lightgrey;
+        }
+      }
+      
+      .pageInvalidMessage {
+        background-color: pink;
+        border: 1px solid red !important;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 20px;
+        margin-top: 20px;
+      }
+    }
   }
 }
+// #endregion
 
+// #region navbar-component
 .navbar-component {
-  .navbar {
-    margin: 0;
-    background-color: #002431;
-    color: #fff;
-    padding: 20px 20px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-  }
+  margin: 0;
+  background-color: #002431;
+  color: #fff;
+  padding: 20px 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   
-  .navbar-link {
+  a {
     text-decoration: none;
     color: #fff;
     font-size: 16px;
@@ -184,8 +184,9 @@
     padding-bottom: 5px;
   }
 
-  .navbar-link:hover {
+  a:hover {
     text-decoration: none;
     cursor: pointer;
   }
 }
+// #endregion
