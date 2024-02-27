@@ -9,7 +9,19 @@
 
 // #region dashboard
 .dashboard-component {
-  padding: 60px 10%; 
+  
+}
+// #endregion
+
+// #region browse-component
+.browse-component {
+
+}
+// #endregion
+
+// #region my-trips-component
+.my-trips-component {
+  padding: 60px 10%;
 
   .header {
     margin-bottom: 20px;
@@ -52,6 +64,7 @@
     }
   }
 }
+
 // #endregion
 
 // #region add-trip-dialog-component

@@ -3,4 +3,5 @@ export interface Country {
   name: string;
   regionID: number;
   regionName: string;
+  imageFilename: string;
 }

@@ -5,16 +5,20 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms'; 
 
 import { AppComponent } from './app.component';
+import { DashboardComponent } from './pages/dashboard.component';
+import { BrowseComponent } from './pages/browse.component';
 import { NavbarComponent } from './shared/navbar.component';
-import { TripsOverviewComponent } from './pages/dashboard';
 import { AddTripDialogComponent } from './shared/addTripDialog.component';
+import { MyTripsComponent } from './pages/myTrips.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    TripsOverviewComponent,
-    AddTripDialogComponent
+    DashboardComponent,
+    AddTripDialogComponent,
+    BrowseComponent,
+    MyTripsComponent
   ],
   imports: [
     BrowserModule,

@@ -11,6 +11,10 @@ export class LocationService {
       return this.http.get<any>('http://localhost:5000/api/location/GetAllLocations');
     }
 
+    getAllCountries() {
+      return this.http.get<any>('http://localhost:5000/api/location/GetAllCountries');
+    }
+
     getAllRegions() {
       return this.http.get<any>('http://localhost:5000/api/location/GetAllRegions');
     }
