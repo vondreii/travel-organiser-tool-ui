@@ -14,8 +14,8 @@ export class TripService {
     return {
       id: 0,
       name: '',
-      locationID: 0,
-      locationName: '',
+      destinationID: 0,
+      destinationName: '',
       countryID: 0,
       countryName: '',
       regionID: 0,
@@ -27,10 +27,10 @@ export class TripService {
     return this.http.get<any>('http://localhost:5000/api/trip/GetAllTrips');
   }
 
-  getFilteredTrips(name: string, location: string) {
+  getFilteredTrips(name: string, destination: string) {
     let params = new HttpParams();
     params = params.append("name", name);
-    params = params.append("location", location);
+    params = params.append("destination", destination);
 
     return this.http.get<any>('http://localhost:5000/api/trip/GetFilteredTrips', { params });
   }
@@ -39,7 +39,7 @@ export class TripService {
     const payload = { 
       id: newTrip.id, 
       name: newTrip.name, 
-      locationID: newTrip.locationID 
+      destinationID: newTrip.destinationID 
     };
     return this.http.post('http://localhost:5000/api/trip/post', payload);
   }

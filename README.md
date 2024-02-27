@@ -33,3 +33,20 @@ This is to practice/upskill in Angular, C# .Net Entity Framework and SQL togethe
 - Can view the Itinerary for each day.
 - Can have a wishlist of future trips.
 - And keep track of finances.
+
+## Structure:
+- Dashboard
+- Browse
+  - Filter Locations
+    - Region
+    - Country
+    - Climate
+    - Tropical
+    - Chilly
+    - Highlands
+    - Rural
+    - Cities
+- My Trips
+- Wishlist
+- Login/Logout
+- Settings

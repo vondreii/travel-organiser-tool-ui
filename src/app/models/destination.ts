@@ -1,4 +1,4 @@
-export interface Location {
+export interface Destination {
   id: number;
   name: string;
   countryID: number;

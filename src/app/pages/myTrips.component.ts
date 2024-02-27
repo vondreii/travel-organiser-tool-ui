@@ -14,7 +14,7 @@ export class MyTripsComponent implements OnInit {
   showAddTripDialog: boolean;
 
   selectedFilterName: string = "";
-  selectedFilterLocation: string = "";
+  selectedFilterDestination: string = "";
 
   constructor(
     private tripService: TripService,
@@ -43,12 +43,12 @@ export class MyTripsComponent implements OnInit {
       case 'name':
         this.selectedFilterName = value;
         break;
-      case 'location':
-        this.selectedFilterLocation = value;
+      case 'destination':
+        this.selectedFilterDestination = value;
         break;
     }
 
-    this.tripService.getFilteredTrips(this.selectedFilterName, this.selectedFilterLocation).subscribe(r => {
+    this.tripService.getFilteredTrips(this.selectedFilterName, this.selectedFilterDestination).subscribe(r => {
       this.filteredTrips = r.$values;
     });
   }

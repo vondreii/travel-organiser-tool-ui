@@ -1,8 +1,8 @@
 export interface Trip {
   id: number;
   name: string;
-  locationID: number;
-  locationName: string;
+  destinationID: number;
+  destinationName: string;
   countryID: number;
   countryName: string;
   regionID: number;

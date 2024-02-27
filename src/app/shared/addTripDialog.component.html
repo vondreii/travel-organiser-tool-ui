@@ -37,15 +37,15 @@
           </div>
         </ng-container>
   
-        <!-- Location -->
+        <!-- Destination -->
         <ng-container *ngIf="trip.countryID !== 0">
           <div class="form-group">
-            <label>Location:</label>
-            <select id="locations" name="locations" [(ngModel)]="trip.locationID" (change)="onInputChangeDropdown(inputTypes.Location, $event)" [class.invalidInput]="!pageFields[inputTypes.Location].isValid">
-              <option *ngIf="trip.locationID === 0" [value]="0" disabled>Please select</option>
-              <option *ngFor="let location of filteredLocations" [value]="location.id">{{ location.name }}</option>
+            <label>Destination:</label>
+            <select id="destinations" name="destinations" [(ngModel)]="trip.destinationID" (change)="onInputChangeDropdown(inputTypes.Destination, $event)" [class.invalidInput]="!pageFields[inputTypes.Destination].isValid">
+              <option *ngIf="trip.destinationID === 0" [value]="0" disabled>Please select</option>
+              <option *ngFor="let destination of filteredDestinations" [value]="destination.id">{{ destination.name }}</option>
             </select>
-            <p *ngIf="!pageFields[inputTypes.Location].isValid" class="invalidMessage">Please select a Location</p>
+            <p *ngIf="!pageFields[inputTypes.Destination].isValid" class="invalidMessage">Please select a Destination</p>
           </div>
         </ng-container>
   

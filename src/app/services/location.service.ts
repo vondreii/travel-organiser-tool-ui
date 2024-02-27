@@ -7,8 +7,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 export class LocationService {
     constructor(private http: HttpClient) { }
 
-    getAllLocations() {
-      return this.http.get<any>('http://localhost:5000/api/location/GetAllLocations');
+    getAllDestinations() {
+      return this.http.get<any>('http://localhost:5000/api/location/getAllDestinations');
     }
 
     getAllCountries() {
@@ -26,10 +26,10 @@ export class LocationService {
       return this.http.get<any>('http://localhost:5000/api/location/GetAllCountriesByRegion', { params });
     }
 
-    getAllLocationsByCountry(countryID: number) {
+    getAllDestinationsByCountry(countryID: number) {
       let params = new HttpParams();
       params = params.append("countryID", countryID);
 
-      return this.http.get<any>('http://localhost:5000/api/location/GetAllLocationsByCountry', { params });
+      return this.http.get<any>('http://localhost:5000/api/location/GetAllDestinationsByCountry', { params });
     }
 }

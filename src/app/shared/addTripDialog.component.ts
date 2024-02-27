@@ -3,7 +3,7 @@ import { DialogService } from 'src/app/services/dialog.service';
 import { TripService } from 'src/app/services/trip.service';
 import { LocationService } from 'src/app/services/location.service';
 import { Trip } from 'src/app/models/trip';
-import { Location } from 'src/app/models/location';
+import { Destination } from 'src/app/models/destination';
 import { Country } from 'src/app/models/country';
 import { Region } from 'src/app/models/region';
 
@@ -16,7 +16,7 @@ export class AddTripDialogComponent implements OnInit {
 
   allRegions: Region[] = [];
   filteredCountries: Country[] = [];
-  filteredLocations: Location[] = [];
+  filteredDestinations: Destination[] = [];
 
   pageFields: PageFields[] = [];
   inputTypes = InputTypes;
@@ -46,7 +46,7 @@ export class AddTripDialogComponent implements OnInit {
       { inputType: InputTypes.TripName, isValid: true },
       { inputType: InputTypes.Region, isValid: true },
       { inputType: InputTypes.Country, isValid: true },
-      { inputType: InputTypes.Location, isValid: true }
+      { inputType: InputTypes.Destination, isValid: true }
     ]
   }
 
@@ -76,18 +76,18 @@ export class AddTripDialogComponent implements OnInit {
 
       case InputTypes.Country:
           this.trip.countryID = value;
-          this.locationService.getAllLocationsByCountry(value).toPromise().then(r => {
-            this.filteredLocations = r.$values;
-            this.trip.locationID = 0;
+          this.locationService.getAllDestinationsByCountry(value).toPromise().then(r => {
+            this.filteredDestinations = r.$values;
+            this.trip.destinationID = 0;
           });
           if (!this.pageFields[InputTypes.Country].isValid) {
             this.runValidation(InputTypes.Country);
           }
         break;
 
-      case InputTypes.Location:
-          if (!this.pageFields[InputTypes.Location].isValid) {
-            this.runValidation(InputTypes.Location);
+      case InputTypes.Destination:
+          if (!this.pageFields[InputTypes.Destination].isValid) {
+            this.runValidation(InputTypes.Destination);
           }
         break;
     }
@@ -101,7 +101,7 @@ export class AddTripDialogComponent implements OnInit {
     this.runValidation(InputTypes.TripName);
     this.runValidation(InputTypes.Region);
     this.runValidation(InputTypes.Country);
-    this.runValidation(InputTypes.Location);
+    this.runValidation(InputTypes.Destination);
 
     if(!this.isPageValid) {
       return;
@@ -132,9 +132,9 @@ export class AddTripDialogComponent implements OnInit {
             this.pageFields[InputTypes.Country].isValid = this.trip.countryID !== 0;
           }
         break;
-      case InputTypes.Location:
+      case InputTypes.Destination:
           if (this.trip.countryID !== 0) {
-            this.pageFields[InputTypes.Location].isValid = this.trip.locationID !== 0;
+            this.pageFields[InputTypes.Destination].isValid = this.trip.destinationID !== 0;
           }
         break;
     }
@@ -142,7 +142,7 @@ export class AddTripDialogComponent implements OnInit {
     this.isPageValid = this.pageFields[InputTypes.TripName].isValid &&
       this.pageFields[InputTypes.Region].isValid &&
       this.pageFields[InputTypes.Country].isValid &&
-      this.pageFields[InputTypes.Location].isValid
+      this.pageFields[InputTypes.Destination].isValid
   }
 }
 
@@ -155,5 +155,5 @@ enum InputTypes {
   TripName = 0,
   Region = 1,
   Country = 2,
-  Location = 3
+  Destination = 3
 }
