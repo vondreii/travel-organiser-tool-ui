@@ -12,7 +12,7 @@ export class LocationService {
       private http: HttpClient, 
       private globalService: GlobalService) { 
         this.url = this.globalService.isProduction ? 
-          "https://travel-organiser-tool.azurewebsites.net/" :
+          "https://travel-organiser-tool.azurewebsites.net" :
           "http://localhost:5000";
     }
 
