@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener  } from '@angular/core';
 import { Country } from 'src/app/models/country';
 import { LocationService } from 'src/app/services/location.service';
 
@@ -8,16 +8,30 @@ import { LocationService } from 'src/app/services/location.service';
 })
 export class BrowseComponent implements OnInit {
   allCountries: Country[] = [];
+  pageNumbers: number[] = [];
+  take: number = 5;
+  currentPage: number = 1;
 
   constructor(private locationService: LocationService) { }
 
   ngOnInit(): void {
-    // Just display a list of countries here
-    // Todo: Fix
-    // Also fix loading
-    this.locationService.getAllCountries().toPromise().then(r => {
-        this.allCountries = r.$values;
+    this.locationService.getAllCountries(0, this.take).toPromise().then(r => {
+        this.allCountries = r.items.$values;
+        const totalPages = Math.ceil(r.totalCount / 5);
+        this.pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
     });
   }
 
+  isCurrentPage(pageNumber: number): boolean {
+    return pageNumber === this.currentPage;
+  }
+
+  loadNewCountries(pageNumber: number) {
+    this.currentPage = pageNumber;
+    const skip = (pageNumber - 1) * this.take;
+
+    this.locationService.getAllCountries(skip, this.take).toPromise().then(r => {
+        this.allCountries = r.items.$values;
+    });
+  }
 }

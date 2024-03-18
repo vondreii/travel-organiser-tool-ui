@@ -1,4 +1,18 @@
 <div class="browse-component">
+  <div class="header">
+    <div>
+      <h1>Browse</h1>
+    </div>
+  </div>
+
+  <div class="pagingButtons">
+    <div *ngFor="let pageNumber of pageNumbers">
+      <button (click)="loadNewCountries(pageNumber)" [ngClass]="{ 'currentPageButton': isCurrentPage(pageNumber) }">
+        {{ pageNumber }}
+      </button>
+    </div>
+  </div>
+  
   <div *ngFor="let country of allCountries">
     <p>{{country.name}}</p>
     <img src="assets/images/countries/{{country.imageFilename}}" width="100px" />

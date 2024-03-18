@@ -9,13 +9,43 @@
 
 // #region dashboard
 .dashboard-component {
-  
+  padding: 60px 10%;
+
+  h1 {
+    margin-bottom: 20px;
+  }
 }
 // #endregion
 
 // #region browse-component
 .browse-component {
+  padding: 60px 10%;
 
+  .pagingButtons {
+    display: flex;
+
+    button {
+      padding: 5px;
+      border-radius: 2px;
+      border: 1px solid grey; 
+      margin: 20px 5px;
+    }
+
+    button:hover {
+      cursor: pointer;
+    }
+
+    button:hover:not(.currentPageButton) {
+      background-color: whitesmoke;
+    }
+
+    .currentPageButton {
+      background-color: #002431;
+      /* Change to desired color */
+      color: white;
+      /* Change to desired text color */
+    }
+  }
 }
 // #endregion
 
