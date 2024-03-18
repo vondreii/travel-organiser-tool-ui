@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class GlobalService {
-  isProduction: boolean = false;
+  isProduction: boolean = true;
 
   constructor() { }
 }
