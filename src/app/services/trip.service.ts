@@ -35,10 +35,13 @@ export class TripService {
     return this.http.get<any>(`${this.url}/api/trip/GetAllTrips`);
   }
 
-  getFilteredTrips(name: string, destination: string) {
+  GetAllTripstops() {
+    return this.http.get<any>(`${this.url}/api/trip/GetAllTripstops`);
+  }
+
+  getFilteredTrips(name: string) {
     let params = new HttpParams();
     params = params.append("name", name);
-    params = params.append("destination", destination);
 
     return this.http.get<any>(`${this.url}/api/trip/GetFilteredTrips`, { params });
   }
@@ -46,8 +49,7 @@ export class TripService {
   saveNewTrip(newTrip: Trip): Observable<any> {
     const payload = { 
       id: newTrip.id, 
-      name: newTrip.name, 
-      destinationID: newTrip.destinationID 
+      name: newTrip.name
     };
     return this.http.post(`${this.url}/api/trip/post`, payload);
   }

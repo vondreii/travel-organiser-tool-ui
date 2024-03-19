@@ -9,18 +9,11 @@
   <div class="filters">
     <p>Trip Name</p>
     <input type="text" id="filterTripName" [ngModel]="selectedFilterName" (ngModelChange)="filterTable($event, 'name')">
-  
-    <p>Trip Destination</p>
-    <input type="text" id="filterDestination" [ngModel]="selectedFilterDestination"
-      (ngModelChange)="filterTable($event, 'destination')">
   </div>
   
   <div class="tripItem" *ngFor="let trip of filteredTrips">
     <img src="" />
     <p>{{trip.name}}</p>
-    <p>{{trip.destinationName}}</p>
-    <p>{{trip.countryName}}</p>
-    <p>{{trip.regionName}}</p>
   </div>
   
   <addTripDialog *ngIf="dialogService.isDialogOpen" (itemAdded)="loadData()"></addTripDialog>

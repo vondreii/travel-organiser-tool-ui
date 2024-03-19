@@ -16,6 +16,7 @@
         </div>
   
         <!-- Region -->
+        <!--
         <div class="form-group">
           <label>Region:</label>
           <select id="regions" name="regions" [ngModel]="trip.regionID" (change)="onInputChangeDropdown(inputTypes.Region, $event)" [class.invalidInput]="!pageFields[inputTypes.Region].isValid">
@@ -24,8 +25,10 @@
           </select>
           <p *ngIf="!pageFields[inputTypes.Region].isValid" class="invalidMessage">Please select a region</p>
         </div>
+        -->
   
         <!-- Country -->
+        <!--
         <ng-container *ngIf="trip.regionID !== 0">
           <div class="form-group">
             <label>Country:</label>
@@ -36,8 +39,10 @@
             <p *ngIf="!pageFields[inputTypes.Country].isValid" class="invalidMessage">Please select a country</p>
           </div>
         </ng-container>
+        -->
   
         <!-- Destination -->
+        <!--
         <ng-container *ngIf="trip.countryID !== 0">
           <div class="form-group">
             <label>Destination:</label>
@@ -48,6 +53,7 @@
             <p *ngIf="!pageFields[inputTypes.Destination].isValid" class="invalidMessage">Please select a Destination</p>
           </div>
         </ng-container>
+        -->
   
         <div class="actionButtons">
           <button type="submit" class="addTrip">Add Trip</button>

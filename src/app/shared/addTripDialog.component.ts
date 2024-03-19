@@ -65,31 +65,31 @@ export class AddTripDialogComponent implements OnInit {
     }
 
     switch(inputType) {
-      case InputTypes.Region:
-          this.trip.regionID = value;
-          this.locationService.getAllCountriesByRegion(value).toPromise().then(r => {
-            this.filteredCountries = r.$values;
-            this.trip.countryID = 0;
-          })
-          this.runValidation(InputTypes.Region);
-        break;
+      // case InputTypes.Region:
+      //     this.trip.regionID = value;
+      //     this.locationService.getAllCountriesByRegion(value).toPromise().then(r => {
+      //       this.filteredCountries = r.$values;
+      //       this.trip.countryID = 0;
+      //     })
+      //     this.runValidation(InputTypes.Region);
+      //   break;
 
-      case InputTypes.Country:
-          this.trip.countryID = value;
-          this.locationService.getAllDestinationsByCountry(value).toPromise().then(r => {
-            this.filteredDestinations = r.$values;
-            this.trip.destinationID = 0;
-          });
-          if (!this.pageFields[InputTypes.Country].isValid) {
-            this.runValidation(InputTypes.Country);
-          }
-        break;
+      // case InputTypes.Country:
+      //     this.trip.countryID = value;
+      //     this.locationService.getAllDestinationsByCountry(value).toPromise().then(r => {
+      //       this.filteredDestinations = r.$values;
+      //       this.trip.destinationID = 0;
+      //     });
+      //     if (!this.pageFields[InputTypes.Country].isValid) {
+      //       this.runValidation(InputTypes.Country);
+      //     }
+      //   break;
 
-      case InputTypes.Destination:
-          if (!this.pageFields[InputTypes.Destination].isValid) {
-            this.runValidation(InputTypes.Destination);
-          }
-        break;
+      // case InputTypes.Destination:
+      //     if (!this.pageFields[InputTypes.Destination].isValid) {
+      //       this.runValidation(InputTypes.Destination);
+      //     }
+      //   break;
     }
   }
 
@@ -124,25 +124,27 @@ export class AddTripDialogComponent implements OnInit {
       case InputTypes.TripName:
           this.pageFields[InputTypes.TripName].isValid = this.trip.name !== '';
         break;
-      case InputTypes.Region:
-          this.pageFields[InputTypes.Region].isValid = this.trip.regionID !== 0;
-        break;
-      case InputTypes.Country:
-          if (this.trip.regionID !== 0) {
-            this.pageFields[InputTypes.Country].isValid = this.trip.countryID !== 0;
-          }
-        break;
-      case InputTypes.Destination:
-          if (this.trip.countryID !== 0) {
-            this.pageFields[InputTypes.Destination].isValid = this.trip.destinationID !== 0;
-          }
-        break;
+      // case InputTypes.Region:
+      //     this.pageFields[InputTypes.Region].isValid = this.trip.regionID !== 0;
+      //   break;
+      // case InputTypes.Country:
+      //     if (this.trip.regionID !== 0) {
+      //       this.pageFields[InputTypes.Country].isValid = this.trip.countryID !== 0;
+      //     }
+      //   break;
+      // case InputTypes.Destination:
+      //     if (this.trip.countryID !== 0) {
+      //       this.pageFields[InputTypes.Destination].isValid = this.trip.destinationID !== 0;
+      //     }
+      //   break;
     }
     
-    this.isPageValid = this.pageFields[InputTypes.TripName].isValid &&
-      this.pageFields[InputTypes.Region].isValid &&
-      this.pageFields[InputTypes.Country].isValid &&
-      this.pageFields[InputTypes.Destination].isValid
+    // this.isPageValid = this.pageFields[InputTypes.TripName].isValid &&
+    //   this.pageFields[InputTypes.Region].isValid &&
+    //   this.pageFields[InputTypes.Country].isValid &&
+    //   this.pageFields[InputTypes.Destination].isValid
+  
+    this.isPageValid = this.pageFields[InputTypes.TripName].isValid;
   }
 }
 
