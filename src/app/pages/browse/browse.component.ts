@@ -32,6 +32,7 @@ export class BrowseComponent implements OnInit {
 
     this.locationService.getAllCountries(skip, this.take).toPromise().then(r => {
         this.allCountries = r.items.$values;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
 }

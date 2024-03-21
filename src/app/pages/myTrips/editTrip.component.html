@@ -1,0 +1,34 @@
+<div class="edit-trip-component">
+  <div class="header">
+    <div>
+      <p class="breadcrumb">
+        <a routerLink="/myTrips">My Trips</a> > 
+        Edit Trip
+      </p>
+      <h1>{{currentTrip.name}}</h1>
+    </div>
+  </div>
+
+  <div *ngIf="tripStops.length > 0">
+    <div class="tripStop" *ngFor="let tripStop of tripStops">
+      <div class="leftSection">
+          <!-- Placeholder image, this will be the destination image -->
+          <img src="assets/images/countries/no-image.jpg" width="150px" />
+      </div>
+      <div class="rightSection">
+          <h2>{{tripStop.destinationName}}</h2>
+          <div class="tripStopDetail">
+            <p>Country</p>
+            <p>{{tripStop.countryName}}</p>
+          </div>
+          <div class="tripStopDetail">
+            <p>Region</p>
+            <p>{{tripStop.regionName}}</p>
+          </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="tripStops.length === 0">
+    <p>You have no destinations in this trip</p>
+  </div>
+</div>

@@ -1,3 +1,17 @@
+@import '~@fortawesome/fontawesome-free/css/all.css';
+$darkblue: #002431;
+$lightblue: #0056b3;
+$brightblue: #1A72CD;
+$white: #fff;
+$lightestgrey: #f5f5f5;
+$lightgrey: #e0e0e0;
+$red: #DC143C;
+$brightred: #E9143C;
+$pink: #F3CFC6;
+$black: #000000;
+$lightshadow: rgba(0, 0, 0, 0.2);
+$shadow: rgba(0, 0, 0, 0.5);
+
 // #region all
 * {
   margin: 0;
@@ -21,14 +35,18 @@
 .browse-component {
   padding: 60px 10%;
 
+  .allCountries {
+    margin: 20px 0px;
+  }
+
   .pagingButtons {
     display: flex;
 
     button {
-      padding: 5px;
+      padding: 5px 8px;
       border-radius: 2px;
-      border: 1px solid grey; 
-      margin: 20px 5px;
+      border: 1px solid $lightgrey; 
+      margin: 10px 5px;
     }
 
     button:hover {
@@ -36,14 +54,12 @@
     }
 
     button:hover:not(.currentPageButton) {
-      background-color: whitesmoke;
+      background-color: $lightestgrey;
     }
 
     .currentPageButton {
-      background-color: #002431;
-      /* Change to desired color */
-      color: white;
-      /* Change to desired text color */
+      background-color: $darkblue;
+      color: $white;
     }
   }
 }
@@ -63,8 +79,8 @@
     }
 
     .plusButton {
-      background-color: #002431;
-      color: #fff;
+      background-color: $lightblue;
+      color: $white;
       border: none;
       border-radius: 50%;
       width: 40px;
@@ -75,6 +91,10 @@
       cursor: pointer;
       margin-bottom: 20px;
     }
+
+    .plusButton:hover {
+      background-color: $brightblue;
+    }
   }
 
   .filters {
@@ -82,15 +102,31 @@
   }
 
   .tripItem {
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    box-shadow: $lightshadow 0px 3px 8px;
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 20px;
     display: flex;
 
     p {
-      padding: 5px 10px;
-      flex: 30%;
+      display: flex;
+      flex-direction: row;
+      flex-grow: 1;
+    }
+
+    p:first-of-type {
+      width: 400px;
+    }
+
+    .editTrip {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: $lightblue;
+    }
+
+    .editTrip:hover {
+      color: $brightblue;
     }
   }
 }
@@ -105,21 +141,21 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: $shadow;
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
 
     .content {
-      background-color: #fff;
+      background-color: $white;
       padding: 30px;
       border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 0 10px $lightshadow;
 
       .exitButton button {
-        background-color: red;
-        color: #fff;
+        background-color: $red; 
+        color: $white;
         border: none;
         border-radius: 50%;
         width: 25px;
@@ -129,6 +165,10 @@
         text-align: center;
         cursor: pointer;
         margin-bottom: 20px;
+      }
+
+      .exitButton button:hover {
+        background-color: $brightred;
       }
       
       h2 {
@@ -148,17 +188,17 @@
           width: 20rem;
           /* TODO: 100% for small screens */
           padding: 10px;
-          border: 1px solid #ccc;
+          border: 1px solid $lightgrey;
           border-radius: 5px;
           font-size: 16px;
         }
 
         .invalidInput {
-          border: 1px solid red !important;
+          border: 1px solid $red !important;
         }
 
         .invalidMessage {
-          color: red;
+          color: $red;
           margin-bottom: 20px;
           margin-top: 5px;
         }
@@ -177,28 +217,28 @@
         }
 
         .addTrip {
-          background-color: #002431;
-          color: #fff;
+          background-color: $lightblue;
+          color: $white;
           margin-right: 20px;
         }
       
         .addTrip:hover {
-          background-color: #0056b3;
+          background-color: $brightblue;
         }
 
         .cancel {
-          background-color: whitesmoke;
-          color: black;
+          background-color: $lightestgrey;
+          color: $black;
         }
 
         .cancel:hover {
-          background-color: lightgrey;
+          background-color: $lightgrey;
         }
       }
       
       .pageInvalidMessage {
-        background-color: pink;
-        border: 1px solid red !important;
+        background-color: $pink;
+        border: 1px solid $red !important;
         border-radius: 5px;
         padding: 10px;
         margin-bottom: 20px;
@@ -209,11 +249,63 @@
 }
 // #endregion
 
+// #region edit-trip-component
+.edit-trip-component {
+  padding: 60px 10%;
+  
+    .header {
+      margin-bottom: 20px;
+
+      .breadcrumb {
+        margin-bottom: 20px;
+
+        a {
+          color: $lightblue;
+        }
+
+        a:hover {
+          color: $brightblue
+        }
+      }
+    }
+
+    .tripStop {
+      background-color: $lightestgrey;
+      margin-bottom: 20px; 
+      border-radius: 5px;
+      padding: 20px;
+      display: flex;
+
+      .leftSection {
+        margin-right: 20px;
+      }
+
+      .rightSection {
+        width: 200px;
+
+        h2 {
+          margin: 10px 0px 20px 0px;
+        }
+
+        .tripStopDetail {
+          display: flex;
+          justify-content: space-between;
+      
+          p:first-of-type {
+            font-weight: bold;
+          }
+        }
+      }
+      
+    }
+}
+// #endregion
+
 // #region navbar-component
 .navbar-component {
   margin: 0;
-  background-color: #002431;
-  color: #fff;
+  background-color: $darkblue;
+  color: $white;
   padding: 20px 20px;
   display: flex;
   justify-content: flex-start;
@@ -221,7 +313,7 @@
   
   a {
     text-decoration: none;
-    color: #fff;
+    color: $white;
     font-size: 16px;
     margin-right: 28px;
     padding-bottom: 5px;

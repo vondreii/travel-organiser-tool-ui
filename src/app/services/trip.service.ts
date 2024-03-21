@@ -35,13 +35,21 @@ export class TripService {
     return this.http.get<any>(`${this.url}/api/trip/GetAllTrips`);
   }
 
-  GetAllTripstops() {
-    return this.http.get<any>(`${this.url}/api/trip/GetAllTripstops`);
+  GetAllTripstops(tripId: number) {
+    let params = new HttpParams();
+    params = params.append("tripId", tripId);
+
+    return this.http.get<any>(`${this.url}/api/trip/GetAllTripstops`, { params });
   }
 
-  getFilteredTrips(name: string) {
+  getFilteredTrips(id: number | null, name: string | null) {
     let params = new HttpParams();
-    params = params.append("name", name);
+    if (id !== null) {
+      params = params.append('id', id.toString());
+    }
+    if (name !== null) {
+      params = params.append('name', name);
+    }
 
     return this.http.get<any>(`${this.url}/api/trip/GetFilteredTrips`, { params });
   }

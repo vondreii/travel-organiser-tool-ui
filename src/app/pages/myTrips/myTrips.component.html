@@ -14,6 +14,9 @@
   <div class="tripItem" *ngFor="let trip of filteredTrips">
     <img src="" />
     <p>{{trip.name}}</p>
+    <p>Date</p>
+    <p>3 Destinations</p>
+    <button class="fa-solid fa-pen editTrip" (click)="onEditTrip(trip.id)"></button>
   </div>
   
   <addTripDialog *ngIf="dialogService.isDialogOpen" (itemAdded)="loadData()"></addTripDialog>

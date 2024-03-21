@@ -1,4 +1,4 @@
-export interface Destination {
+export interface Tripstop {
   id: number;
   tripID: number;
   tripName: string; 

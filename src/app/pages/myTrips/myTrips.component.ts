@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { TripService } from 'src/app/services/trip.service';
 import { DialogService } from 'src/app/services/dialog.service';
 import { Trip } from 'src/app/models/trip';
@@ -16,6 +17,7 @@ export class MyTripsComponent implements OnInit {
   selectedFilterName: string = "";
 
   constructor(
+    private router: Router,
     private tripService: TripService,
     public dialogService: DialogService
   ) { 
@@ -37,6 +39,10 @@ export class MyTripsComponent implements OnInit {
     this.dialogService.isDialogOpen = true;
   }
 
+  onEditTrip(tripId: number) {
+    this.router.navigate(['/editTrip', tripId]);
+  }
+
   filterTable(value: any, col: string) {
     switch(col) {
       case 'name':
@@ -44,7 +50,7 @@ export class MyTripsComponent implements OnInit {
         break;
     }
 
-    this.tripService.getFilteredTrips(this.selectedFilterName).subscribe(r => {
+    this.tripService.getFilteredTrips(null, this.selectedFilterName).subscribe(r => {
       this.filteredTrips = r.$values;
     });
   }
