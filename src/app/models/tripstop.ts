@@ -4,6 +4,7 @@ export interface Tripstop {
   TripName: string; 
   DestinationID: number;
   DestinationName: string;
+  DestinationImageFileName: string;
   CountryID: number;
   CountryName: string;
   RegionID: number;

@@ -12,19 +12,19 @@
   <div *ngIf="tripStops.length > 0">
     <div class="tripStop" *ngFor="let tripStop of tripStops">
       <div class="leftSection">
-          <!-- Placeholder image, this will be the destination image -->
-          <img src="assets/images/countries/no-image.jpg" width="150px" />
+        <!-- Placeholder image, this will be the destination image -->
+        <img src="assets/images/destinations/{{tripStop.DestinationImageFileName}}" width="200px" />
       </div>
       <div class="rightSection">
-          <h2>{{tripStop.DestinationName}}</h2>
-          <div class="tripStopDetail">
-            <p>Country</p>
-            <p>{{tripStop.CountryName}}</p>
-          </div>
-          <div class="tripStopDetail">
-            <p>Region</p>
+        <div class="tripStopDetail">
+          <span class="fas fa-globe countryRegionIcons"></span>
+          <p>{{tripStop.CountryName}}</p>
+          <ng-container *ngIf="tripStop.CountryName !== tripStop.RegionName">
+            <span class="fas fa-globe countryRegionIcons"></span>
             <p>{{tripStop.RegionName}}</p>
-          </div>
+          </ng-container>
+        </div>
+        <h2>{{tripStop.DestinationName}}</h2>
       </div>
     </div>
   </div>

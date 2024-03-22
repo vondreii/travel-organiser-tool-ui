@@ -1,5 +1,6 @@
 @import '~@fortawesome/fontawesome-free/css/all.css';
 $darkblue: #002431;
+// $darkblue: #17182f;
 $lightblue: #0056b3;
 $brightblue: #1A72CD;
 $white: #fff;
@@ -7,6 +8,7 @@ $lightestgrey: #f5f5f5;
 $lightgrey: #e0e0e0;
 $red: #DC143C;
 $brightred: #E9143C;
+$green: #61e6be;
 $pink: #F3CFC6;
 $black: #000000;
 $lightshadow: rgba(0, 0, 0, 0.2);
@@ -17,13 +19,14 @@ $shadow: rgba(0, 0, 0, 0.5);
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 // #endregion
 
 // #region dashboard
 .dashboard-component {
   padding: 60px 10%;
+  background-color: $lightestgrey;
 
   h1 {
     margin-bottom: 20px;
@@ -34,6 +37,7 @@ $shadow: rgba(0, 0, 0, 0.5);
 // #region browse-component
 .browse-component {
   padding: 60px 10%;
+  background-color: $lightestgrey;
 
   .allCountries {
     margin: 20px 0px;
@@ -47,6 +51,7 @@ $shadow: rgba(0, 0, 0, 0.5);
       border-radius: 2px;
       border: 1px solid $lightgrey; 
       margin: 10px 5px;
+      background-color: $white;
     }
 
     button:hover {
@@ -68,6 +73,7 @@ $shadow: rgba(0, 0, 0, 0.5);
 // #region my-trips-component
 .my-trips-component {
   padding: 60px 10%;
+  background-color: $lightestgrey;
 
   .header {
     margin-bottom: 20px;
@@ -102,63 +108,77 @@ $shadow: rgba(0, 0, 0, 0.5);
   }
 
   .tripItem {
-    box-shadow: $lightshadow 0px 3px 8px;
-    padding: 20px;
-    margin-bottom: 12px;
+    // box-shadow: $lightshadow 0px 3px 8px;
+    margin: 60px 0px;
     border-radius: 2px;
-
-    p {
-      display: flex;
-      flex-direction: row;
-      flex-grow: 1;
-    }
-
-    p:first-of-type {
-      width: 400px;
-    }
-
-    .editTrip {
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: $lightblue;
-    }
-
-    .editTrip:hover {
-      color: $brightblue;
-    }
     
     .tripHeader {
       display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
       margin-bottom: 20px;
+
+      h2 {
+        flex-grow: 1;
+        margin-bottom: 10px;
+      }
+
+      .noOfDestinationIcon {
+        color: $brightred
+      }
+
+      .editTripButton {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: $lightblue;
+        margin-top: 8px;
+      }
+
+      .editTripButton:hover {
+        color: $brightblue;
+      }
     }
 
     .tripStop {
-      background-color: $lightestgrey;
+      box-shadow: $lightshadow 0px 3px 8px;
+      background-color: $white;
       display: flex;
       margin-bottom: 20px;
       border-radius: 5px;
 
       .leftSection {
         margin-right: 20px;
+        margin-bottom: -4px;
       }
 
       .rightSection {
-        width: 200px;
-
         h2 {
-          margin: 10px 0px 20px 0px;
+          margin: 20px 0px;
         }
 
         .tripStopDetail {
           display: flex;
-          justify-content: space-between;
-      
-          p:first-of-type {
-            font-weight: bold;
+          padding-top: 20px;
+          font-size: 10pt;
+
+          span {
+            margin-right: 6px; 
+          }
+
+          .countryRegionIcons {
+            color: $green;
+          }
+
+          p {
+            margin-right: 20px; 
           }
         }
       }
+    }
+
+    .tripStop:last-child {
+      margin-bottom: 60px;
     }
   }
 }
@@ -284,6 +304,8 @@ $shadow: rgba(0, 0, 0, 0.5);
 // #region edit-trip-component
 .edit-trip-component {
   padding: 60px 10%;
+  background-color: $lightestgrey;
+  height: max-content;
   
     .header {
       margin-bottom: 20px;
@@ -302,29 +324,37 @@ $shadow: rgba(0, 0, 0, 0.5);
     }
 
     .tripStop {
-      background-color: $lightestgrey;
-      margin-bottom: 20px; 
-      border-radius: 5px;
-      padding: 20px;
+      box-shadow: $lightshadow 0px 3px 8px;
+      background-color: $white;
       display: flex;
+      margin-bottom: 20px;
+      border-radius: 5px;
 
       .leftSection {
         margin-right: 20px;
+        margin-bottom: -4px;
       }
 
       .rightSection {
-        width: 200px;
-
         h2 {
-          margin: 10px 0px 20px 0px;
+          margin: 20px 0px;
         }
 
         .tripStopDetail {
           display: flex;
-          justify-content: space-between;
-      
-          p:first-of-type {
-            font-weight: bold;
+          padding-top: 20px;
+          font-size: 10pt;
+
+          span {
+            margin-right: 6px; 
+          }
+
+          .countryRegionIcons {
+            color: $green;
+          }
+
+          p {
+            margin-right: 20px; 
           }
         }
       }

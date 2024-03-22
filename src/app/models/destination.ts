@@ -3,4 +3,5 @@ export interface Destination {
   Name: string;
   CountryID: number;
   CountryName: string;
+  ImageFilename: string;
 }
