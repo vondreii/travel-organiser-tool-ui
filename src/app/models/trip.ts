@@ -1,4 +1,8 @@
+import { Tripstop } from "./tripstop";
+
 export interface Trip {
-  id: number;
-  name: string;
+  Id: number;
+  Name: string;
+  NoOfDestinations: number;
+  TripStops: Tripstop[]
 }

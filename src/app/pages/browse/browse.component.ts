@@ -16,8 +16,8 @@ export class BrowseComponent implements OnInit {
 
   ngOnInit(): void {
     this.locationService.getAllCountries(0, this.take).toPromise().then(r => {
-        this.allCountries = r.items.$values;
-        const totalPages = Math.ceil(r.totalCount / 5);
+        this.allCountries = r.Items;
+        const totalPages = Math.ceil(r.TotalCount / 5);
         this.pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
     });
   }
@@ -31,7 +31,7 @@ export class BrowseComponent implements OnInit {
     const skip = (pageNumber - 1) * this.take;
 
     this.locationService.getAllCountries(skip, this.take).toPromise().then(r => {
-        this.allCountries = r.items.$values;
+        this.allCountries = r.Items;
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }

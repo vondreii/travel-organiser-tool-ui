@@ -104,9 +104,8 @@ $shadow: rgba(0, 0, 0, 0.5);
   .tripItem {
     box-shadow: $lightshadow 0px 3px 8px;
     padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    display: flex;
+    margin-bottom: 12px;
+    border-radius: 2px;
 
     p {
       display: flex;
@@ -127,6 +126,39 @@ $shadow: rgba(0, 0, 0, 0.5);
 
     .editTrip:hover {
       color: $brightblue;
+    }
+    
+    .tripHeader {
+      display: flex;
+      margin-bottom: 20px;
+    }
+
+    .tripStop {
+      background-color: $lightestgrey;
+      display: flex;
+      margin-bottom: 20px;
+      border-radius: 5px;
+
+      .leftSection {
+        margin-right: 20px;
+      }
+
+      .rightSection {
+        width: 200px;
+
+        h2 {
+          margin: 10px 0px 20px 0px;
+        }
+
+        .tripStopDetail {
+          display: flex;
+          justify-content: space-between;
+      
+          p:first-of-type {
+            font-weight: bold;
+          }
+        }
+      }
     }
   }
 }
@@ -296,7 +328,6 @@ $shadow: rgba(0, 0, 0, 0.5);
           }
         }
       }
-      
     }
 }
 // #endregion

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { TripService } from 'src/app/services/trip.service';
 import { DialogService } from 'src/app/services/dialog.service';
 import { Trip } from 'src/app/models/trip';
+import { Tripstop } from 'src/app/models/tripstop';
 
 @Component({
   selector: 'myTrips',
@@ -10,6 +11,8 @@ import { Trip } from 'src/app/models/trip';
 })
 export class MyTripsComponent implements OnInit {
   allTrips: Trip[] = [];
+  allTripStops: Tripstop[] = [];
+
   filteredTrips: Trip[] = [];
 
   showAddTripDialog: boolean;
@@ -30,7 +33,7 @@ export class MyTripsComponent implements OnInit {
 
   loadData() {
     this.tripService.getAllTrips().subscribe(r => {
-      this.allTrips = r.$values;
+      this.allTrips = r;
       this.filteredTrips = this.allTrips;
     });
   }
@@ -51,7 +54,7 @@ export class MyTripsComponent implements OnInit {
     }
 
     this.tripService.getFilteredTrips(null, this.selectedFilterName).subscribe(r => {
-      this.filteredTrips = r.$values;
+      this.filteredTrips = r;
     });
   }
 

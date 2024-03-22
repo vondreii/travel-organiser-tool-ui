@@ -12,11 +12,30 @@
   </div>
   
   <div class="tripItem" *ngFor="let trip of filteredTrips">
-    <img src="" />
-    <p>{{trip.name}}</p>
-    <p>Date</p>
-    <p>3 Destinations</p>
-    <button class="fa-solid fa-pen editTrip" (click)="onEditTrip(trip.id)"></button>
+    <div class="tripHeader">
+      <p><b>{{trip.Name}}</b></p>
+      <p>{{trip.NoOfDestinations > 0 ? trip.NoOfDestinations : 'No'}} Destinations</p>
+      <button class="fa-solid fa-pen editTrip" (click)="onEditTrip(trip.Id)"></button>
+    </div>
+    <div *ngIf="trip.TripStops.length > 0">
+      <div class="tripStop" *ngFor="let tripStop of trip.TripStops">
+        <div class="leftSection">
+          <!-- Placeholder image, this will be the destination image -->
+          <img src="assets/images/countries/no-image.jpg" width="150px" />
+        </div>
+        <div class="rightSection">
+          <h2>{{tripStop.DestinationName}}</h2>
+          <div class="tripStopDetail">
+            <p>Country</p>
+            <p>{{tripStop.CountryName}}</p>
+          </div>
+          <div class="tripStopDetail">
+            <p>Region</p>
+            <p>{{tripStop.RegionName}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   
   <addTripDialog *ngIf="dialogService.isDialogOpen" (itemAdded)="loadData()"></addTripDialog>

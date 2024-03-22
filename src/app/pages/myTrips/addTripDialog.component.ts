@@ -122,7 +122,7 @@ export class AddTripDialogComponent implements OnInit {
   runValidation(inputType: InputTypes) {
     switch(inputType) {
       case InputTypes.TripName:
-          this.pageFields[InputTypes.TripName].isValid = this.trip.name !== '';
+          this.pageFields[InputTypes.TripName].isValid = this.trip.Name !== '';
         break;
       // case InputTypes.Region:
       //     this.pageFields[InputTypes.Region].isValid = this.trip.regionID !== 0;

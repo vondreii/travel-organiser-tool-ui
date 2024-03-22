@@ -26,10 +26,10 @@ export class EditTripComponent implements OnInit {
       this.currentTripId = +params['id']; // Retrieve the trip ID from route parameters
 
       this.tripService.getFilteredTrips(this.currentTripId, null).subscribe(r => {
-        this.currentTrip = r.$values[0];
+        this.currentTrip = r[0];
 
         this.tripService.GetAllTripstops(this.currentTripId).subscribe(r => {
-          this.tripStops = r.$values;
+          this.tripStops = r;
         });
       });
     });

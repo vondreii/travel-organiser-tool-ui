@@ -20,14 +20,24 @@ export class TripService {
 
   initializeNewTrip() {
     return {
-      id: 0,
-      name: '',
-      destinationID: 0,
-      destinationName: '',
-      countryID: 0,
-      countryName: '',
-      regionID: 0,
-      regionName: ''
+      Id: 0,
+      Name: '',
+      NoOfDestinations: 0,
+      TripStops: []
+    }
+  }
+
+  initializeNewTripstop() {
+    return {
+      Id: 0,
+      TripID: 0,
+      TripName: '',
+      DestinationID: 0,
+      DestinationName: '',
+      CountryID: 0,
+      CountryName: '',
+      RegionID: 0,
+      RegionName: ''
     }
   }
 
@@ -56,8 +66,8 @@ export class TripService {
 
   saveNewTrip(newTrip: Trip): Observable<any> {
     const payload = { 
-      id: newTrip.id, 
-      name: newTrip.name
+      id: newTrip.Id, 
+      name: newTrip.Name
     };
     return this.http.post(`${this.url}/api/trip/post`, payload);
   }

@@ -1,7 +1,7 @@
 export interface Country {
-  id: number;
-  name: string;
-  regionID: number;
-  regionName: string;
-  imageFilename: string;
+  Id: number;
+  Name: string;
+  RegionID: number;
+  RegionName: string;
+  ImageFilename: string;
 }
