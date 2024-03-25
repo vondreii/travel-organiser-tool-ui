@@ -2,10 +2,8 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { DialogService } from 'src/app/services/dialog.service';
 import { TripService } from 'src/app/services/trip.service';
 import { LocationService } from 'src/app/services/location.service';
-import { Trip } from 'src/app/models/trip';
-import { Destination } from 'src/app/models/destination';
-import { Country } from 'src/app/models/country';
-import { Region } from 'src/app/models/region';
+import { Trip, Tripstop } from 'src/app/models/tripModels';
+import { Destination, Country, Region } from 'src/app/models/locationModels';
 
 @Component({
   selector: 'addTripDialog',

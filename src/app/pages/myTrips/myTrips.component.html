@@ -24,10 +24,10 @@
         Edit <span class="fa-solid fa-pen"></span>
       </div>
     </div>
+    
     <div *ngIf="trip.TripStops.length > 0">
       <div class="tripStop" *ngFor="let tripStop of trip.TripStops">
         <div class="leftSection">
-          <!-- Placeholder image, this will be the destination image -->
           <img src="assets/images/destinations/{{tripStop.DestinationImageFileName}}" width="200px" />
         </div>
         <div class="rightSection">

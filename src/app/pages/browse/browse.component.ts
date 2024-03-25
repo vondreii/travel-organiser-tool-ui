@@ -1,5 +1,5 @@
 import { Component, OnInit, HostListener  } from '@angular/core';
-import { Country } from 'src/app/models/country';
+import { Country } from 'src/app/models/locationModels';
 import { LocationService } from 'src/app/services/location.service';
 
 @Component({

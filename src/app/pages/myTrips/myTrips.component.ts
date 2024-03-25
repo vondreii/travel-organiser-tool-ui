@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TripService } from 'src/app/services/trip.service';
 import { DialogService } from 'src/app/services/dialog.service';
-import { Trip } from 'src/app/models/trip';
-import { Tripstop } from 'src/app/models/tripstop';
+import { Trip, Tripstop } from 'src/app/models/tripModels';
 
 @Component({
   selector: 'myTrips',

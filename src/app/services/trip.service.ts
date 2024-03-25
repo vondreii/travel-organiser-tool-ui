@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Trip } from 'src/app/models/trip';
+import { Trip } from 'src/app/models/tripModels';
 import { GlobalService } from './global.service';
 
 @Injectable({
@@ -31,9 +31,9 @@ export class TripService {
     return {
       Id: 0,
       TripID: 0,
-      TripName: '',
       DestinationID: 0,
       DestinationName: '',
+      DestinationImageFileName: '',
       CountryID: 0,
       CountryName: '',
       RegionID: 0,

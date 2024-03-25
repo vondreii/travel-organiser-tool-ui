@@ -1,34 +1,118 @@
 <div class="edit-trip-component">
   <div class="header">
-    <div>
-      <p class="breadcrumb">
-        <a routerLink="/myTrips">My Trips</a> > 
-        Edit Trip
-      </p>
-      <h1>{{currentTrip.Name}}</h1>
-    </div>
+    <p class="breadcrumb">
+      <a routerLink="/myTrips">My Trips</a> > Edit Trip
+    </p>
+    <h2>Editing {{currentTrip.Name}}</h2>
   </div>
 
-  <div *ngIf="tripStops.length > 0">
-    <div class="tripStop" *ngFor="let tripStop of tripStops">
-      <div class="leftSection">
-        <!-- Placeholder image, this will be the destination image -->
-        <img src="assets/images/destinations/{{tripStop.DestinationImageFileName}}" width="200px" />
-      </div>
-      <div class="rightSection">
-        <div class="tripStopDetail">
-          <span class="fas fa-globe countryRegionIcons"></span>
-          <p>{{tripStop.CountryName}}</p>
-          <ng-container *ngIf="tripStop.CountryName !== tripStop.RegionName">
-            <span class="fas fa-globe countryRegionIcons"></span>
-            <p>{{tripStop.RegionName}}</p>
-          </ng-container>
-        </div>
-        <h2>{{tripStop.DestinationName}}</h2>
+  <form>
+    <!-- Trip details subheading -->
+    <div class="tripDetails">
+      <p><span class="fas fa-globe icon"></span> Trip Details </p>
+      <div *ngIf="showEditButton" class="editTripButton" (click)="onEditTripDetails()">
+        Edit <span class="fa-solid fa-pen"></span>
       </div>
     </div>
-  </div>
-  <div *ngIf="tripStops.length === 0">
+
+    <!-- Trip details edit mode = false -->
+    <div *ngIf="!isEditTrip">
+      <div class="form-group">
+        <div class="inputField">
+          <label>Trip Name</label>
+          <input type="text" name="tripName" [(ngModel)]="currentTrip.Name" disabled class="disabledField" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Trip details edit mode = true -->
+    <div *ngIf="isEditTrip">
+      <div class="form-group">
+        <div class="inputField">
+          <label>Trip Name</label>
+          <input type="text" name="tripName" [(ngModel)]="editedTrip.Name" />
+        </div>
+      </div>
+      <div class="actionButtons" *ngIf="isEditTrip">
+        <button type="submit" class="saveChanges" (click)="onSaveTrip()">Save Changes</button>
+        <button class="cancel" (click)="onCancelEditingTrip()">Cancel</button>
+      </div>
+    </div>
+    
+    <ng-container *ngIf="currentTripStops.length > 0">
+      <ng-container *ngFor="let tripStop of currentTripStops; let i = index">
+        <!-- Each destination details subheading -->
+        <div class="destinationHeader">
+          <p>
+            <span class="fas fa-map-marker icon"></span> 
+            Destination {{i+1}}: {{currentTripStops[i].DestinationName}}
+          </p>
+          <div *ngIf="showEditButton" class="editTripButton" (click)="onEditTripStop(i)">
+            Edit <span class="fa-solid fa-pen"></span>
+          </div>
+        </div>
+        
+        <!-- Destination/tripstop edit mode = false -->
+        <div *ngIf="!isEditTripStop[i]">
+          <div class="form-group">
+            <div class="inputField">
+              <label>Region</label>
+              <input type="text" name="regionName" [value]="currentTripStops[i].RegionName" [disabled]="true" class="disabledField" />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="inputField">
+              <label>Country</label>
+              <input type="text" name="countryName" [value]="currentTripStops[i].CountryName" [disabled]="true" class="disabledField" />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="inputField">
+              <label>Destination</label>
+              <input type="text" name="destinationName" [value]="currentTripStops[i].DestinationName" [disabled]="true" class="disabledField" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Destination/tripstop edit mode = true -->
+        <div *ngIf="isEditTripStop[i]">
+          <div class="form-group">
+            <div class="inputField">
+              <label>Region</label>
+              <select name="regionName" [ngModel]="editedTripStop.RegionID" (change)="onInputChangeDropdown(inputTypes.Region, $event, i)">
+                <option *ngFor="let region of allRegions" [value]="region.Id">{{ region.Name }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="inputField">
+              <label>Country</label>
+              <select id="country" name="countryName" [ngModel]="editedTripStop.CountryID" (change)="onInputChangeDropdown(inputTypes.Country, $event, i)">
+                <option *ngFor="let country of filteredCountries" [value]="country.Id">{{ country.Name }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="inputField">
+              <label>Destination</label>
+              <select id="destination" name="destinationName" [ngModel]="editedTripStop.DestinationID" (change)="onInputChangeDropdown(inputTypes.Destination, $event, i)">
+                <option *ngFor="let destination of filteredDestinations" [value]="destination.Id">{{ destination.Name }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="actionButtons">
+            <button type="submit" class="saveChanges" (click)="onSaveTripstop(i)">Save Changes</button>
+            <button class="cancel" (click)="onCancelEditingTripStop(i)">Cancel</button>
+          </div>
+        </div>
+        
+      </ng-container>
+    </ng-container>
+  </form>
+
+  <!-- No Destination/tripstops -->
+  <div *ngIf="currentTripStops.length === 0">
     <p>You have no destinations in this trip</p>
   </div>
 </div>

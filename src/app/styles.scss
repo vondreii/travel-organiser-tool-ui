@@ -5,7 +5,8 @@ $lightblue: #0056b3;
 $brightblue: #1A72CD;
 $white: #fff;
 $lightestgrey: #f5f5f5;
-$lightgrey: #e0e0e0;
+$lightgrey: #ececec;
+$grey: #e0e0e0;
 $red: #DC143C;
 $brightred: #E9143C;
 $green: #61e6be;
@@ -49,7 +50,7 @@ $shadow: rgba(0, 0, 0, 0.5);
     button {
       padding: 5px 8px;
       border-radius: 2px;
-      border: 1px solid $lightgrey; 
+      border: 1px solid $grey; 
       margin: 10px 5px;
       background-color: $white;
     }
@@ -240,7 +241,7 @@ $shadow: rgba(0, 0, 0, 0.5);
           width: 20rem;
           /* TODO: 100% for small screens */
           padding: 10px;
-          border: 1px solid $lightgrey;
+          border: 1px solid $grey;
           border-radius: 5px;
           font-size: 16px;
         }
@@ -284,7 +285,7 @@ $shadow: rgba(0, 0, 0, 0.5);
         }
 
         .cancel:hover {
-          background-color: $lightgrey;
+          background-color: $grey;
         }
       }
       
@@ -321,42 +322,107 @@ $shadow: rgba(0, 0, 0, 0.5);
           color: $brightblue
         }
       }
+
+      h2 {
+        flex-grow: 1;
+        margin-bottom: 10px;
+      }
     }
 
-    .tripStop {
-      box-shadow: $lightshadow 0px 3px 8px;
-      background-color: $white;
+    .destinationHeader, .tripDetails {
+      margin: 30px 0px 15px 0px; 
       display: flex;
-      margin-bottom: 20px;
-      border-radius: 5px;
+      justify-content: space-between;
 
-      .leftSection {
-        margin-right: 20px;
-        margin-bottom: -4px;
+      .editTripButton {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: $lightblue;
       }
 
-      .rightSection {
-        h2 {
-          margin: 20px 0px;
+      .editTripButton:hover {
+        color: $brightblue;
+      }
+    }
+
+    .destinationHeader .icon {
+      color: $brightred;
+    }
+
+    .tripDetails .icon {
+      color: $green;
+    }
+
+    .form-group {
+      margin-bottom: 0px;
+
+      .inputField {
+        display: flex;
+        
+        label {
+          background-color: $lightestgrey;
+          width: 20%;
         }
 
-        .tripStopDetail {
-          display: flex;
-          padding-top: 20px;
-          font-size: 10pt;
-
-          span {
-            margin-right: 6px; 
-          }
-
-          .countryRegionIcons {
-            color: $green;
-          }
-
-          p {
-            margin-right: 20px; 
-          }
+        input[type="text"], select {
+          background-color: $white;
+          width: 80%;
         }
+
+        label, input[type="text"],
+        select {
+          padding: 10px;
+          border: 1px solid $grey;
+          border-radius: 5px;
+          font-size: 16px;
+        }
+
+        .disabledField {
+          background-color: $lightestgrey !important;
+        }
+      }
+
+      .invalidInput {
+        border: 1px solid $red !important;
+      }
+
+      .invalidMessage {
+        color: $red;
+        margin-bottom: 20px;
+        margin-top: 5px;
+      }
+    }
+
+    .actionButtons {
+      margin-top: 30px;
+      margin-bottom: 20px;
+
+      button {
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      .saveChanges {
+        background-color: $lightblue;
+        color: $white;
+        margin-right: 20px;
+      }
+    
+      .saveChanges:hover {
+        background-color: $brightblue;
+      }
+
+      .cancel {
+        background-color: $grey;
+        color: $black;
+      }
+
+      .cancel:hover {
+        background-color: $lightgrey;
       }
     }
 }
