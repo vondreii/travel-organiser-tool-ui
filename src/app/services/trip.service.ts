@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Trip } from 'src/app/models/tripModels';
+import { Trip, Tripstop } from 'src/app/models/tripModels';
 import { GlobalService } from './global.service';
 
 @Injectable({
@@ -31,6 +31,8 @@ export class TripService {
     return {
       Id: 0,
       TripID: 0,
+      Startdate: '',
+      Enddate: '',
       DestinationID: 0,
       DestinationName: '',
       DestinationImageFileName: '',
@@ -66,10 +68,26 @@ export class TripService {
 
   saveNewTrip(newTrip: Trip): Observable<any> {
     const payload = { 
-      id: newTrip.Id, 
-      name: newTrip.Name
+      Id: newTrip.Id, 
+      Name: newTrip.Name
     };
-    return this.http.post(`${this.url}/api/trip/post`, payload);
+    return this.http.post(`${this.url}/api/trip/Post`, payload);
+  }
+
+  editTrip(newTrip: Trip): Observable<any> {
+    const payload = { 
+      Id: newTrip.Id, 
+      Name: newTrip.Name
+    };
+    return this.http.post(`${this.url}/api/trip/EditTrip`, payload);
+  }
+
+  editTripstop(newTripstop: Tripstop): Observable<any> {
+    const payload = { 
+      Id: newTripstop.Id, 
+      DestinationID: newTripstop.DestinationID
+    };
+    return this.http.post(`${this.url}/api/trip/EditTripstop`, payload);
   }
 }
 

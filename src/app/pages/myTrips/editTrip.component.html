@@ -10,7 +10,7 @@
     <!-- Trip details subheading -->
     <div class="tripDetails">
       <p><span class="fas fa-globe icon"></span> Trip Details </p>
-      <div *ngIf="showEditButton" class="editTripButton" (click)="onEditTripDetails()">
+      <div *ngIf="showEditButton" class="editTripButton" (click)="onEditTrip()">
         Edit <span class="fa-solid fa-pen"></span>
       </div>
     </div>
@@ -56,6 +56,18 @@
         <div *ngIf="!isEditTripStop[i]">
           <div class="form-group">
             <div class="inputField">
+              <label>Start date</label>
+              <input type="text" name="startdate" [value]="currentTripStops[i].Startdate" [disabled]="true" class="disabledField" />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="inputField">
+              <label>End date</label>
+              <input type="text" name="Enddate" [value]="currentTripStops[i].Enddate" [disabled]="true" class="disabledField" />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="inputField">
               <label>Region</label>
               <input type="text" name="regionName" [value]="currentTripStops[i].RegionName" [disabled]="true" class="disabledField" />
             </div>
@@ -76,6 +88,18 @@
 
         <!-- Destination/tripstop edit mode = true -->
         <div *ngIf="isEditTripStop[i]">
+          <div class="form-group">
+            <div class="inputField">
+              <label>Start date</label>
+              <input type="text" name="startdate" [value]="currentTripStops[i].Startdate" />
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="inputField">
+              <label>End date</label>
+              <input type="text" name="Enddate" [value]="currentTripStops[i].Enddate" />
+            </div>
+          </div>
           <div class="form-group">
             <div class="inputField">
               <label>Region</label>

@@ -1,6 +1,8 @@
 export interface Tripstop {
   Id: number;
   TripID: number;
+  Startdate: string;
+  Enddate: string;
   DestinationID: number;
   DestinationName: string;
   DestinationImageFileName: string;

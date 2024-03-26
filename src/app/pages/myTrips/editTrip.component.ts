@@ -37,7 +37,6 @@ export class EditTripComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      // Retrieve the trip ID from route parameters
       const currentTripId = +params['id']; 
 
       this.tripService.getFilteredTrips(currentTripId, null).subscribe(r => {
@@ -53,10 +52,13 @@ export class EditTripComponent implements OnInit {
     });
   }
 
-  onEditTripDetails() {
+  showOrHideEditButtons() {
+    this.showEditButton = !this.isEditTripStop.some(x => x) && !this.isEditTrip;
+  }
+
+  onEditTrip() {
     this.isEditTrip = true;
     this.showOrHideEditButtons();
-
     this.editedTrip = { ...this.currentTrip };
   }
 
@@ -64,17 +66,22 @@ export class EditTripComponent implements OnInit {
     this.isEditTrip = false;
     this.showOrHideEditButtons();
     this.currentTrip = this.editedTrip;
+
+    this.tripService.editTrip(this.currentTrip).subscribe(
+      (response) => {
+        console.error('Success');
+      },
+      (error) => {
+        console.error('An error occurred:', error);
+      }
+    );
   }
 
   onCancelEditingTrip() {
     this.isEditTrip = false;
     this.showOrHideEditButtons();
   }
-
-  showOrHideEditButtons() {
-    this.showEditButton = !this.isEditTripStop.some(x => x) && !this.isEditTrip;
-  }
-
+  
   onEditTripStop(index: number){
     this.isEditTripStop[index] = true; 
     this.showOrHideEditButtons();
@@ -91,15 +98,26 @@ export class EditTripComponent implements OnInit {
     });
   }
 
-  onCancelEditingTripStop(index: number) {
-    this.isEditTripStop[index] = false; 
-    this.showOrHideEditButtons();
-  }
-
   onSaveTripstop(index: number) {
     this.isEditTripStop[index] = false; 
     this.showOrHideEditButtons();
     this.currentTripStops[index] = this.editedTripStop;
+
+    this.tripService.editTripstop(this.currentTripStops[index]).subscribe(
+      (response) => {
+        this.tripService.GetAllTripstops(this.currentTrip.Id).subscribe(r => {
+          this.currentTripStops = r;
+        });
+      },
+      (error) => {
+        console.error('An error occurred:', error);
+      }
+    );
+  }
+
+  onCancelEditingTripStop(index: number) {
+    this.isEditTripStop[index] = false; 
+    this.showOrHideEditButtons();
   }
 
   onInputChangeDropdown(inputType: InputTypes, data: any, index: number) {
@@ -111,52 +129,34 @@ export class EditTripComponent implements OnInit {
     switch(inputType) {
       case InputTypes.Region:
           this.editedTripStop.RegionID = value;
-          const region = this.allRegions.find(x => x.Id === value);
-          region !== undefined ? this.editedTripStop.RegionName = region.Name : '';
-          this.getFilteredCountries(value)
+          this.locationService.getAllCountriesByRegion(value).toPromise().then(r => {
+            this.filteredCountries = r;
+            this.editedTripStop.CountryID = this.filteredCountries[0].Id;
+            this.locationService.getAllDestinationsByCountry(this.editedTripStop.CountryID).toPromise().then(r => {
+              this.filteredDestinations = r;
+              this.editedTripStop.DestinationID = this.filteredDestinations[0].Id;
+            });
+          });
           break;
 
       case InputTypes.Country:
           this.editedTripStop.CountryID = value;
-          const country = this.filteredCountries.find(x => x.Id === value);
-          country !== undefined ? this.editedTripStop.CountryName = country.Name : '';
-          this.getFilteredDestinations(value);
+          this.locationService.getAllDestinationsByCountry(value).toPromise().then(r => {
+            this.filteredDestinations = r;
+            this.editedTripStop.DestinationID = this.filteredDestinations[0].Id;
+          });
           break;
 
       case InputTypes.Destination:
           this.editedTripStop.DestinationID = value;
-          const destination = this.filteredDestinations.find(x => x.Id === value);
-          if (destination !== undefined) {
-            this.editedTripStop.DestinationName = destination.Name;
-            this.editedTripStop.DestinationImageFileName = destination.ImageFilename;
-          }
           break;
     }
-  }
-
-  getFilteredCountries(regionId: number) {
-    this.locationService.getAllCountriesByRegion(regionId).toPromise().then(r => {
-      this.filteredCountries = r;
-      this.editedTripStop.CountryID = this.filteredCountries[0].Id;
-      this.editedTripStop.CountryName = this.filteredCountries[0].Name;
-      this.getFilteredDestinations(this.editedTripStop.CountryID);
-    });
-  }
-
-  getFilteredDestinations(countryId: number) {
-    this.locationService.getAllDestinationsByCountry(countryId).toPromise().then(r => {
-      this.filteredDestinations = r;
-      this.editedTripStop.DestinationID = this.filteredDestinations[0].Id;
-      this.editedTripStop.DestinationName = this.filteredDestinations[0].Name;
-      this.editedTripStop.DestinationImageFileName = this.filteredDestinations[0].ImageFilename;
-    });
   }
 }
 
 enum InputTypes {
   TripName = 0,
-  DestinationName = 1,
-  Region = 2,
-  Country = 3,
-  Destination = 4
+  Region = 1,
+  Country = 2,
+  Destination = 3
 }
