@@ -25,6 +25,16 @@ export class EditTripComponent implements OnInit {
   isEditTrip: boolean = false;
   isEditTripStop: boolean[] = [];
 
+  tripstopStartTimes: any[] = [];
+  tripstopEndTimes: any[] = [];
+
+  // calendarDays: any[] = [];
+
+  // years: number[] = [];
+  // months: string[] = [];
+  // days: number[] = [];
+
+
   constructor(
     private route: ActivatedRoute,
     private locationService: LocationService,
@@ -33,6 +43,34 @@ export class EditTripComponent implements OnInit {
     this.currentTrip = tripService.initializeNewTrip();
     this.editedTrip = tripService.initializeNewTrip();
     this.editedTripStop = tripService.initializeNewTripstop();
+    // this.setCalendar();
+  }
+
+  setCalendar() {
+    // this.calendarDays = [
+    //   { name: 'January', days: Array.from({ length: 31 }, (_, index) => index + 1) },
+    //   { name: 'February', days: [] },
+    //   { name: 'March', days: Array.from({ length: 31 }, (_, index) => index + 1) },
+    //   { name: 'April', days: Array.from({ length: 30 }, (_, index) => index + 1) },
+    //   { name: 'May', days: Array.from({ length: 31 }, (_, index) => index + 1) },
+    //   { name: 'June', days: Array.from({ length: 30 }, (_, index) => index + 1) },
+    //   { name: 'July', days: Array.from({ length: 31 }, (_, index) => index + 1) },
+    //   { name: 'August', days: Array.from({ length: 31 }, (_, index) => index + 1) },
+    //   { name: 'September', days: Array.from({ length: 30 }, (_, index) => index + 1) },
+    //   { name: 'October', days: Array.from({ length: 31 }, (_, index) => index + 1) },
+    //   { name: 'November', days: Array.from({ length: 30 }, (_, index) => index + 1) },
+    //   { name: 'December', days: Array.from({ length: 31 }, (_, index) => index + 1) }
+    // ];
+
+    // const currentYear = new Date().getFullYear();
+    // const isLeapYear = (currentYear % 4 == 0 && currentYear % 100 != 0) || currentYear % 400 == 0;
+
+    // isLeapYear ?
+    //   this.calendarDays[1].days = Array.from({ length: 29 }, (_, index) => index + 1) :
+    //   this.calendarDays[1].days = Array.from({ length: 28 }, (_, index) => index + 1);
+
+    // this.months = this.calendarDays.map(x => x.name);
+    // this.days = this.calendarDays.find(x => x.name === new Date().getMonth()).days;
   }
 
   ngOnInit(): void {
@@ -45,6 +83,12 @@ export class EditTripComponent implements OnInit {
         this.tripService.GetAllTripstops(currentTripId).subscribe(r => {
           this.currentTripStops = r;
           this.currentTripStops.forEach(t => {
+            this.tripstopStartTimes.push({
+              Day: new Date(t.Startdate).getUTCDate(), Month: new Date(t.Startdate).getUTCMonth(), Year: new Date(t.Startdate).getUTCFullYear(),
+            });
+            this.tripstopEndTimes.push({
+              Day: new Date(t.Enddate).getUTCDate(), Month: new Date(t.Enddate).getUTCMonth(), Year: new Date(t.Enddate).getUTCFullYear(),
+            });
             this.isEditTripStop.push(false);
           });
         });

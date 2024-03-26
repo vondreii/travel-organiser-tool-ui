@@ -362,12 +362,12 @@ $shadow: rgba(0, 0, 0, 0.5);
         
         label {
           background-color: $lightestgrey;
-          width: 20%;
+          width: 25%;
         }
 
         input[type="text"], select {
           background-color: $white;
-          width: 80%;
+          width: 75%;
         }
 
         label, input[type="text"],
@@ -376,6 +376,10 @@ $shadow: rgba(0, 0, 0, 0.5);
           border: 1px solid $grey;
           border-radius: 5px;
           font-size: 16px;
+        }
+
+        .dateField {
+          width: 25% !important;
         }
 
         .disabledField {
