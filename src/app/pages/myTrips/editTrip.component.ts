@@ -25,16 +25,6 @@ export class EditTripComponent implements OnInit {
   isEditTrip: boolean = false;
   isEditTripStop: boolean[] = [];
 
-  tripstopStartTimes: any[] = [];
-  tripstopEndTimes: any[] = [];
-
-  // calendarDays: any[] = [];
-
-  // years: number[] = [];
-  // months: string[] = [];
-  // days: number[] = [];
-
-
   constructor(
     private route: ActivatedRoute,
     private locationService: LocationService,
@@ -43,34 +33,6 @@ export class EditTripComponent implements OnInit {
     this.currentTrip = tripService.initializeNewTrip();
     this.editedTrip = tripService.initializeNewTrip();
     this.editedTripStop = tripService.initializeNewTripstop();
-    // this.setCalendar();
-  }
-
-  setCalendar() {
-    // this.calendarDays = [
-    //   { name: 'January', days: Array.from({ length: 31 }, (_, index) => index + 1) },
-    //   { name: 'February', days: [] },
-    //   { name: 'March', days: Array.from({ length: 31 }, (_, index) => index + 1) },
-    //   { name: 'April', days: Array.from({ length: 30 }, (_, index) => index + 1) },
-    //   { name: 'May', days: Array.from({ length: 31 }, (_, index) => index + 1) },
-    //   { name: 'June', days: Array.from({ length: 30 }, (_, index) => index + 1) },
-    //   { name: 'July', days: Array.from({ length: 31 }, (_, index) => index + 1) },
-    //   { name: 'August', days: Array.from({ length: 31 }, (_, index) => index + 1) },
-    //   { name: 'September', days: Array.from({ length: 30 }, (_, index) => index + 1) },
-    //   { name: 'October', days: Array.from({ length: 31 }, (_, index) => index + 1) },
-    //   { name: 'November', days: Array.from({ length: 30 }, (_, index) => index + 1) },
-    //   { name: 'December', days: Array.from({ length: 31 }, (_, index) => index + 1) }
-    // ];
-
-    // const currentYear = new Date().getFullYear();
-    // const isLeapYear = (currentYear % 4 == 0 && currentYear % 100 != 0) || currentYear % 400 == 0;
-
-    // isLeapYear ?
-    //   this.calendarDays[1].days = Array.from({ length: 29 }, (_, index) => index + 1) :
-    //   this.calendarDays[1].days = Array.from({ length: 28 }, (_, index) => index + 1);
-
-    // this.months = this.calendarDays.map(x => x.name);
-    // this.days = this.calendarDays.find(x => x.name === new Date().getMonth()).days;
   }
 
   ngOnInit(): void {
@@ -79,21 +41,33 @@ export class EditTripComponent implements OnInit {
 
       this.tripService.getFilteredTrips(currentTripId, null).subscribe(r => {
         this.currentTrip = r[0];
-
-        this.tripService.GetAllTripstops(currentTripId).subscribe(r => {
-          this.currentTripStops = r;
-          this.currentTripStops.forEach(t => {
-            this.tripstopStartTimes.push({
-              Day: new Date(t.Startdate).getUTCDate(), Month: new Date(t.Startdate).getUTCMonth(), Year: new Date(t.Startdate).getUTCFullYear(),
-            });
-            this.tripstopEndTimes.push({
-              Day: new Date(t.Enddate).getUTCDate(), Month: new Date(t.Enddate).getUTCMonth(), Year: new Date(t.Enddate).getUTCFullYear(),
-            });
-            this.isEditTripStop.push(false);
-          });
-        });
+        this.isEditTripStop = new Array(this.currentTrip.NoOfDestinations).fill(false);
+        this.loadTripstops(currentTripId);
       });
     });
+  }
+
+  loadTripstops(currentTripId: number) {
+    this.tripService.GetAllTripstops(currentTripId).subscribe(r => {
+      this.currentTripStops = r;
+      this.currentTripStops.forEach(t => {
+        t.Startdate = this.convertDate(new Date(t.Startdate));
+        t.Enddate = this.convertDate(new Date(t.Enddate));
+      });
+    });
+  }
+
+  convertDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    return `${year}-${month}-${day}`;
+  }
+
+  convertToDateISOString(dateString: string): string {
+    const [year, month, day] = dateString.split('-').map(Number);
+    const date = new Date(year, month - 1, day);
+    return date.toISOString();
   }
 
   showOrHideEditButtons() {
@@ -145,13 +119,14 @@ export class EditTripComponent implements OnInit {
   onSaveTripstop(index: number) {
     this.isEditTripStop[index] = false; 
     this.showOrHideEditButtons();
+
+    this.editedTripStop.Startdate = this.convertToDateISOString(this.editedTripStop.Startdate);
+    this.editedTripStop.Enddate = this.convertToDateISOString(this.editedTripStop.Enddate);
     this.currentTripStops[index] = this.editedTripStop;
 
     this.tripService.editTripstop(this.currentTripStops[index]).subscribe(
       (response) => {
-        this.tripService.GetAllTripstops(this.currentTrip.Id).subscribe(r => {
-          this.currentTripStops = r;
-        });
+        this.loadTripstops(this.currentTrip.Id);
       },
       (error) => {
         console.error('An error occurred:', error);
@@ -200,7 +175,9 @@ export class EditTripComponent implements OnInit {
 
 enum InputTypes {
   TripName = 0,
-  Region = 1,
-  Country = 2,
-  Destination = 3
+  StartDate = 1,
+  EndDate = 2,
+  Region = 3,
+  Country = 4,
+  Destination = 5
 }

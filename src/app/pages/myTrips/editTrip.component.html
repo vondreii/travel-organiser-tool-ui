@@ -3,13 +3,13 @@
     <p class="breadcrumb">
       <a routerLink="/myTrips">My Trips</a> > Edit Trip
     </p>
-    <h2>Editing {{currentTrip.Name}}</h2>
+    <h1>Editing {{currentTrip.Name}}</h1>
   </div>
 
   <form>
     <!-- Trip details subheading -->
     <div class="tripDetails">
-      <p><span class="fas fa-globe icon"></span> Trip Details </p>
+      <h3><span class="fas fa-globe icon"></span> Trip Details </h3>
       <div *ngIf="showEditButton" class="editTripButton" (click)="onEditTrip()">
         Edit <span class="fa-solid fa-pen"></span>
       </div>
@@ -43,10 +43,10 @@
       <ng-container *ngFor="let tripStop of currentTripStops; let i = index">
         <!-- Each destination details subheading -->
         <div class="destinationHeader">
-          <p>
+          <h3>
             <span class="fas fa-map-marker icon"></span> 
             Destination {{i+1}}: {{currentTripStops[i].DestinationName}}
-          </p>
+          </h3>
           <div *ngIf="showEditButton" class="editTripButton" (click)="onEditTripStop(i)">
             Edit <span class="fa-solid fa-pen"></span>
           </div>
@@ -57,17 +57,13 @@
           <div class="form-group">
             <div class="inputField">
               <label>Start date</label>
-              <input type="text" name="startdate" [value]="tripstopStartTimes[i].Day" [disabled]="true" class="disabledField dateField" />
-              <input type="text" name="startdate" [value]="tripstopStartTimes[i].Month" [disabled]="true" class="disabledField dateField" />
-              <input type="text" name="startdate" [value]="tripstopStartTimes[i].Year" [disabled]="true" class="disabledField dateField" />
+              <input type="date" name="startdate" [value]="currentTripStops[i].Startdate" max="2100-01-01" [disabled]="true" class="disabledField" />
             </div>
           </div>
           <div class="form-group">
             <div class="inputField">
               <label>End date</label>
-              <input type="text" name="startdate" [value]="tripstopEndTimes[i].Day" [disabled]="true" class="disabledField dateField" />
-              <input type="text" name="startdate" [value]="tripstopEndTimes[i].Month" [disabled]="true" class="disabledField dateField" />
-              <input type="text" name="startdate" [value]="tripstopEndTimes[i].Year" [disabled]="true" class="disabledField dateField" />
+              <input type="date" name="enddate" [value]="currentTripStops[i].Enddate" max="2100-01-01" [disabled]="true" class="disabledField" />
             </div>
           </div>
           <div class="form-group">
@@ -95,17 +91,13 @@
           <div class="form-group">
             <div class="inputField">
               <label>Start date</label>
-              <input type="text" name="startdate" [value]="tripstopStartTimes[i].Day" class="dateField" />
-              <input type="text" name="startdate" [value]="tripstopStartTimes[i].Month" class="dateField" />
-              <input type="text" name="startdate" [value]="tripstopStartTimes[i].Year" class="dateField" />
+              <input type="date" name="startdate" [(ngModel)]="editedTripStop.Startdate" min="1900-01-01" max="2100-01-01" />
             </div>
           </div>
           <div class="form-group">
             <div class="inputField">
               <label>End date</label>
-              <input type="text" name="startdate" [value]="tripstopEndTimes[i].Day" class="dateField" />
-              <input type="text" name="startdate" [value]="tripstopEndTimes[i].Month" class="dateField" />
-              <input type="text" name="startdate" [value]="tripstopEndTimes[i].Year" class="dateField" />
+              <input type="date" name="enddate" [(ngModel)]="editedTripStop.Enddate" min="1900-01-01" max="2100-01-01" />
             </div>
           </div>
           <div class="form-group">

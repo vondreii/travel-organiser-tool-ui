@@ -85,7 +85,9 @@ export class TripService {
   editTripstop(newTripstop: Tripstop): Observable<any> {
     const payload = { 
       Id: newTripstop.Id, 
-      DestinationID: newTripstop.DestinationID
+      DestinationID: newTripstop.DestinationID,
+      Startdate: newTripstop.Startdate,
+      Enddate: newTripstop.Enddate
     };
     return this.http.post(`${this.url}/api/trip/EditTripstop`, payload);
   }

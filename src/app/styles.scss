@@ -16,6 +16,11 @@ $lightshadow: rgba(0, 0, 0, 0.2);
 $shadow: rgba(0, 0, 0, 0.5);
 
 // #region all
+html, body {
+  height: 100%;
+  background-color: $lightestgrey;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -75,6 +80,7 @@ $shadow: rgba(0, 0, 0, 0.5);
 .my-trips-component {
   padding: 60px 10%;
   background-color: $lightestgrey;
+  height: 90%;
 
   .header {
     margin-bottom: 20px;
@@ -306,141 +312,153 @@ $shadow: rgba(0, 0, 0, 0.5);
 .edit-trip-component {
   padding: 60px 10%;
   background-color: $lightestgrey;
-  height: max-content;
   
-    .header {
+  .header {
+    margin-bottom: 20px;
+
+    .breadcrumb {
       margin-bottom: 20px;
 
-      .breadcrumb {
-        margin-bottom: 20px;
-
-        a {
-          color: $lightblue;
-        }
-
-        a:hover {
-          color: $brightblue
-        }
-      }
-
-      h2 {
-        flex-grow: 1;
-        margin-bottom: 10px;
-      }
-    }
-
-    .destinationHeader, .tripDetails {
-      margin: 30px 0px 15px 0px; 
-      display: flex;
-      justify-content: space-between;
-
-      .editTripButton {
-        background: none;
-        border: none;
-        cursor: pointer;
+      a {
         color: $lightblue;
       }
 
-      .editTripButton:hover {
-        color: $brightblue;
+      a:hover {
+        color: $brightblue
       }
     }
 
-    .destinationHeader .icon {
+    h2 {
+      flex-grow: 1;
+      margin-bottom: 10px;
+    }
+  }
+
+  .destinationHeader, .tripDetails {
+    margin: 30px 0px 15px 0px; 
+    display: flex;
+    justify-content: space-between;
+
+    .editTripButton {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: $lightblue;
+    }
+
+    .editTripButton:hover {
+      color: $brightblue;
+    }
+  }
+
+  .destinationHeader {
+    align-items: center;
+
+    .icon {
       color: $brightred;
     }
+  }
 
-    .tripDetails .icon {
-      color: $green;
-    }
+  .tripDetails .icon {
+    color: $green;
+  }
 
-    .form-group {
-      margin-bottom: 0px;
+  .form-group {
+    margin-bottom: 0px;
 
-      .inputField {
-        display: flex;
-        
-        label {
-          background-color: $lightestgrey;
-          width: 25%;
-        }
-
-        input[type="text"], select {
-          background-color: $white;
-          width: 75%;
-        }
-
-        label, input[type="text"],
-        select {
-          padding: 10px;
-          border: 1px solid $grey;
-          border-radius: 5px;
-          font-size: 16px;
-        }
-
-        .dateField {
-          width: 25% !important;
-        }
-
-        .disabledField {
-          background-color: $lightestgrey !important;
-        }
-      }
-
-      .invalidInput {
-        border: 1px solid $red !important;
-      }
-
-      .invalidMessage {
-        color: $red;
-        margin-bottom: 20px;
-        margin-top: 5px;
-      }
-    }
-
-    .actionButtons {
-      margin-top: 30px;
-      margin-bottom: 20px;
-
-      button {
-        border: none;
-        border-radius: 5px;
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-      }
-
-      .saveChanges {
-        background-color: $lightblue;
-        color: $white;
-        margin-right: 20px;
-      }
-    
-      .saveChanges:hover {
-        background-color: $brightblue;
-      }
-
-      .cancel {
-        background-color: $grey;
-        color: $black;
-      }
-
-      .cancel:hover {
+    .inputField {
+      display: flex;
+      
+      label {
         background-color: $lightgrey;
+        width: 25%;
+      }
+
+      p {
+        width: 25%;
+        margin: 12px 0px 6px 6px;
+      }
+
+      input[type="text"], input[type="date"], select {
+        background-color: $white;
+        width: 75%;
+      }
+
+      input[type="date"] {
+        padding: 0px 10px;
+      }
+
+      label, input[type="text"], input[type="date"], select {
+        padding: 10px;
+        border: 1px solid $grey;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+
+      .dateField {
+        width: 25% !important;
+      }
+
+      .disabledField {
+        background-color: $lightestgrey !important;
       }
     }
+
+    .invalidInput {
+      border: 1px solid $red !important;
+    }
+
+    .invalidMessage {
+      color: $red;
+      margin-bottom: 20px;
+      margin-top: 5px;
+    }
+  }
+
+  .actionButtons {
+    margin-top: 30px;
+    margin-bottom: 20px;
+
+    button {
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .saveChanges {
+      background-color: $lightblue;
+      color: $white;
+      margin-right: 20px;
+    }
+  
+    .saveChanges:hover {
+      background-color: $brightblue;
+    }
+
+    .cancel {
+      background-color: $grey;
+      color: $black;
+    }
+
+    .cancel:hover {
+      background-color: $lightgrey;
+    }
+  }
 }
 // #endregion
 
 // #region navbar-component
 .navbar-component {
   margin: 0;
-  background-color: $darkblue;
-  color: $white;
+  background-color: #002431;
+  color: #fff;
   padding: 20px 20px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  height: 10%;
   
   a {
     text-decoration: none;

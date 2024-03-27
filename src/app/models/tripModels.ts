@@ -1,3 +1,10 @@
+export interface Trip {
+  Id: number;
+  Name: string;
+  NoOfDestinations: number;
+  TripStops: Tripstop[]
+}
+
 export interface Tripstop {
   Id: number;
   TripID: number;
@@ -10,11 +17,4 @@ export interface Tripstop {
   CountryName: string;
   RegionID: number;
   RegionName: string;
-}
-
-export interface Trip {
-  Id: number;
-  Name: string;
-  NoOfDestinations: number;
-  TripStops: Tripstop[]
 }
