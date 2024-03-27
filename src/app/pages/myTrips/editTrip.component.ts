@@ -66,7 +66,7 @@ export class EditTripComponent implements OnInit {
 
   convertToDateISOString(dateString: string): string {
     const [year, month, day] = dateString.split('-').map(Number);
-    const date = new Date(year, month - 1, day);
+    const date = new Date(Date.UTC(year, month - 1, day));
     return date.toISOString();
   }
 
