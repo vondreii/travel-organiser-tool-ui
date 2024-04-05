@@ -26,7 +26,7 @@ import { EditTripComponent } from './pages/myTrips/editTrip.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule 
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
