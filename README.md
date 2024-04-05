@@ -9,7 +9,7 @@ This is to practice/upskill in Angular, C# .Net Entity Framework and SQL togethe
 - Add/edit/delete trips (WIP)
 
 ## How to run UI (hosted on Azure):
-- Visit **https://travel-organiser-tool-web.azurewebsites.net/** 
+- Visit **https://travelorganiser.azurewebsites.net/** 
   
 ## How to run UI (locally):
 - Open **travel-organiser-tool-ui** in Visual Code.
