@@ -10,13 +10,13 @@
     <!-- Trip details subheading -->
     <div class="tripDetails">
       <h3><span class="fas fa-globe icon"></span> Trip Details </h3>
-      <div *ngIf="showEditOrAddButtons" class="editTripButton" (click)="onEditTrip()">
+      <div *ngIf="showEditOrAddButtons" class="editTripButton" (click)="onEditTripDetails()">
         Edit <span class="fa-solid fa-pen"></span>
       </div>
     </div>
 
     <!-- Trip name edit mode = false -->
-    <div *ngIf="!isEditTrip">
+    <div *ngIf="!isEditTripDetails">
       <div class="form-group">
         <div class="inputField">
           <label>Trip Name</label>
@@ -26,17 +26,17 @@
     </div>
 
     <!-- Trip name edit mode = true -->
-    <div *ngIf="isEditTrip">
+    <div *ngIf="isEditTripDetails">
       <div class="form-group">
         <div class="inputField">
           <label>Trip Name</label>
-          <input type="text" name="tripName" [(ngModel)]="editedTrip.Name" [class.invalidInput]="isEditTripInvalidInput"/>
+          <input type="text" name="tripName" [(ngModel)]="editedTrip.Name" [class.invalidInput]="isEditTripDetailsInvalidInput"/>
         </div>
       </div>
-      <p *ngIf="isEditTripInvalidInput" class="invalidMessage">Please enter a valid name</p>
-      <div class="actionButtons" *ngIf="isEditTrip">
-        <button type="submit" class="saveChanges" (click)="onSaveTrip()">Save Changes</button>
-        <button class="cancel" (click)="onCancelEditingTrip()">Cancel</button>
+      <p *ngIf="isEditTripDetailsInvalidInput" class="invalidMessage">Please enter a valid name</p>
+      <div class="actionButtons" *ngIf="isEditTripDetails">
+        <button type="submit" class="saveChanges" (click)="onSaveTripDetails()">Save Changes</button>
+        <button class="cancel" (click)="onCancelTripDetails()">Cancel</button>
       </div>
     </div>
     
@@ -92,19 +92,19 @@
           <div class="form-group">
             <div class="inputField">
               <label>Start date</label>
-              <input type="date" name="startdate" [(ngModel)]="editedTripStop.Startdate" min="1900-01-01" max="2100-01-01" />
+              <input type="date" name="startdate" [(ngModel)]="editedTripStop.Startdate" min="1900-01-01" max="2100-01-01" [class.invalidInput]="isEditTripStopInvalidInput"/>
             </div>
           </div>
           <div class="form-group">
             <div class="inputField">
               <label>End date</label>
-              <input type="date" name="enddate" [(ngModel)]="editedTripStop.Enddate" min="1900-01-01" max="2100-01-01" />
+              <input type="date" name="enddate" [(ngModel)]="editedTripStop.Enddate" min="1900-01-01" max="2100-01-01" [class.invalidInput]="isEditTripStopInvalidInput"/>
             </div>
           </div>
           <div class="form-group">
             <div class="inputField">
               <label>Region</label>
-              <select name="regionName" [ngModel]="editedTripStop.RegionID" (change)="onEditTripChangeDropdown(inputTypes.Region, $event)">
+              <select name="regionName" [ngModel]="editedTripStop.RegionID" (change)="onEditTripStopChangeDropdown(inputTypes.Region, $event)">
                 <option *ngFor="let region of allRegions" [value]="region.Id">{{ region.Name }}</option>
               </select>
             </div>
@@ -112,7 +112,7 @@
           <div class="form-group">
             <div class="inputField">
               <label>Country</label>
-              <select id="country" name="countryName" [ngModel]="editedTripStop.CountryID" (change)="onEditTripChangeDropdown(inputTypes.Country, $event)">
+              <select id="country" name="countryName" [ngModel]="editedTripStop.CountryID" (change)="onEditTripStopChangeDropdown(inputTypes.Country, $event)">
                 <option *ngFor="let country of filteredCountries" [value]="country.Id">{{ country.Name }}</option>
               </select>
             </div>
@@ -120,15 +120,16 @@
           <div class="form-group">
             <div class="inputField">
               <label>Destination</label>
-              <select id="destination" name="destinationName" [ngModel]="editedTripStop.DestinationID" (change)="onEditTripChangeDropdown(inputTypes.Destination, $event)">
+              <select id="destination" name="destinationName" [ngModel]="editedTripStop.DestinationID" (change)="onEditTripStopChangeDropdown(inputTypes.Destination, $event)">
                 <option *ngFor="let destination of filteredDestinations" [value]="destination.Id">{{ destination.Name }}
                 </option>
               </select>
             </div>
           </div>
+          <p *ngIf="isEditTripStopInvalidInput" class="invalidMessage">Please enter valid start and end date ranges</p>
           <div class="actionButtons">
-            <button type="submit" class="saveChanges" (click)="onSaveTripstop(i)">Save Changes</button>
-            <button class="cancel" (click)="onCancelEditingTripStop(i)">Cancel</button>
+            <button type="submit" class="saveChanges" (click)="onSaveEditTripstop(i)">Save Changes</button>
+            <button class="cancel" (click)="onCancelEditTripStop(i)">Cancel</button>
           </div>
         </div>
       </ng-container>
@@ -139,12 +140,12 @@
       <p>You have no destinations in this trip.</p>
     </div>
 
-    <button *ngIf="showEditOrAddButtons" class="addTripstopButton" (click)="onAddAnotherTrip()">
-      {{currentTripStops.length > 0 ? 'Add another trip stop' : 'Add your first destination'}}
+    <button *ngIf="showEditOrAddButtons" class="addTripstopButton" (click)="onAddNewTripStop()">
+      {{currentTripStops.length > 0 ? 'Add another destination' : 'Add your first destination'}}
     </button>
 
     <!-- Add new Destination/tripstop -->
-    <div *ngIf="isAddAnotherTrip">
+    <div *ngIf="isAddNewTripstop">
       <div class="destinationHeader">
         <h3>
           <span class="fas fa-map-marker icon"></span>
@@ -154,19 +155,19 @@
       <div class="form-group">
         <div class="inputField">
           <label>Start date</label>
-          <input type="date" name="startdate" [(ngModel)]="newTripStop.Startdate" min="1900-01-01" max="2100-01-01" />
+          <input type="date" name="startdate" [(ngModel)]="newTripStop.Startdate" min="1900-01-01" max="2100-01-01" [class.invalidInput]="isNewTripInvalidInput" />
         </div>
       </div>
       <div class="form-group">
         <div class="inputField">
           <label>End date</label>
-          <input type="date" name="enddate" [(ngModel)]="newTripStop.Enddate" min="1900-01-01" max="2100-01-01" />
+          <input type="date" name="enddate" [(ngModel)]="newTripStop.Enddate" min="1900-01-01" max="2100-01-01" [class.invalidInput]="isNewTripInvalidInput" />
         </div>
       </div>
       <div class="form-group">
         <div class="inputField">
           <label>Region</label>
-          <select name="regionName" [ngModel]="newTripStop.RegionID" (change)="onAddTripChangeDropdown(inputTypes.Region, $event)">
+          <select name="regionName" [ngModel]="newTripStop.RegionID" (change)="onAddNewTripStopChangeDropdown(inputTypes.Region, $event)">
             <option *ngFor="let region of allRegions" [value]="region.Id">{{ region.Name }}</option>
           </select>
         </div>
@@ -174,7 +175,7 @@
       <div class="form-group">
         <div class="inputField">
           <label>Country</label>
-          <select id="country" name="countryName" [ngModel]="newTripStop.CountryID" (change)="onAddTripChangeDropdown(inputTypes.Country, $event)">
+          <select id="country" name="countryName" [ngModel]="newTripStop.CountryID" (change)="onAddNewTripStopChangeDropdown(inputTypes.Country, $event)">
             <option *ngFor="let country of filteredCountries" [value]="country.Id">{{ country.Name }}</option>
           </select>
         </div>
@@ -182,16 +183,16 @@
       <div class="form-group">
         <div class="inputField">
           <label>Destination</label>
-          <select id="destination" name="destinationName" [ngModel]="newTripStop.DestinationID" (change)="onAddTripChangeDropdown(inputTypes.Destination, $event)">
+          <select id="destination" name="destinationName" [ngModel]="newTripStop.DestinationID" (change)="onAddNewTripStopChangeDropdown(inputTypes.Destination, $event)">
             <option *ngFor="let destination of filteredDestinations" [value]="destination.Id">{{ destination.Name }}
             </option>
           </select>
         </div>
       </div>
-      <p *ngIf="isNewTripInvalidInput" class="invalidMessage">Error message here</p>
+      <p *ngIf="isNewTripInvalidInput" class="invalidMessage">Please enter valid start and end date ranges</p>
       <div class="actionButtons">
-        <button type="submit" class="saveChanges" (click)="onSaveAddingNewTrip()">Save Changes</button>
-        <button class="cancel" (click)="onCancelAddingNewTrip()">Cancel</button>
+        <button type="submit" class="saveChanges" (click)="onSaveAddNewTripStop()">Save Changes</button>
+        <button class="cancel" (click)="onCancelAddNewTripStop()">Cancel</button>
       </div>
     </div>
   </form>

@@ -14,14 +14,15 @@ export class EditTripComponent implements OnInit {
   currentTripStops: Tripstop[] = [];
 
   editedTrip: Trip;
+  isEditTripDetails: boolean = false;
+  isEditTripDetailsInvalidInput: boolean = false;
+
   editedTripStop: Tripstop;
-  isEditTrip: boolean = false;
   isEditTripStop: boolean[] = [];
-  isEditTripInvalidInput: boolean = false;
+  isEditTripStopInvalidInput: boolean = false;
 
   newTripStop: Tripstop;
-  newTripName: string = "";
-  isAddAnotherTrip: boolean = false;
+  isAddNewTripstop: boolean = false;
   isNewTripInvalidInput: boolean = false;
 
   allRegions: Region[] = [];
@@ -80,25 +81,26 @@ export class EditTripComponent implements OnInit {
 
   showOrHideEditButtons() {
     this.showEditOrAddButtons = 
-      !this.isEditTripStop.some(x => x) && 
-      !this.isEditTrip && 
-      !this.isAddAnotherTrip;
+      !this.isEditTripDetails &&
+      !this.isEditTripStop.some(x => x) &&
+      !this.isAddNewTripstop;
   }
 
-  onEditTrip() {
-    this.isEditTrip = true;
+  // Edit, save, cancel trip details eg name
+  onEditTripDetails() {
+    this.isEditTripDetails = true;
     this.showOrHideEditButtons();
     this.editedTrip = { ...this.currentTrip };
   }
 
-  onSaveTrip() {
+  onSaveTripDetails() {
     if (this.editedTrip.Name === "") {
-      this.isEditTripInvalidInput = true;
+      this.isEditTripDetailsInvalidInput = true;
       return;
     }
-    this.isEditTripInvalidInput = false;
+    this.isEditTripDetailsInvalidInput = false;
 
-    this.isEditTrip = false;
+    this.isEditTripDetails = false;
     this.showOrHideEditButtons();
     this.currentTrip = this.editedTrip;
 
@@ -112,11 +114,13 @@ export class EditTripComponent implements OnInit {
     );
   }
 
-  onCancelEditingTrip() {
-    this.isEditTrip = false;
+  onCancelTripDetails() {
+    this.isEditTripDetails = false;
+    this.isEditTripDetailsInvalidInput = false;
     this.showOrHideEditButtons();
   }
   
+  // Edit, save, cancel trip stop destinations
   onEditTripStop(index: number){
     this.isEditTripStop[index] = true; 
     this.showOrHideEditButtons();
@@ -133,82 +137,7 @@ export class EditTripComponent implements OnInit {
     });
   }
 
-  onSaveTripstop(index: number) {
-    this.isEditTripStop[index] = false; 
-    this.showOrHideEditButtons();
-
-    this.editedTripStop.Startdate = this.convertToDateISOString(this.editedTripStop.Startdate);
-    this.editedTripStop.Enddate = this.convertToDateISOString(this.editedTripStop.Enddate);
-    this.currentTripStops[index] = this.editedTripStop;
-
-    this.tripService.editTripstop(this.currentTripStops[index]).subscribe(
-      (response) => {
-        this.loadTripstops(this.currentTrip.Id);
-      },
-      (error) => {
-        console.error('An error occurred:', error);
-      }
-    );
-  }
-
-  onCancelEditingTripStop(index: number) {
-    this.isEditTripStop[index] = false; 
-    this.showOrHideEditButtons();
-  }
-
-  onAddAnotherTrip() {
-    this.isAddAnotherTrip = true;
-    this.showOrHideEditButtons();
-    const currentDate = new Date();
-    const tomorrowDate = new Date(currentDate);
-    tomorrowDate.setDate(currentDate.getDate() + 1);
-    this.newTripStop.Startdate = this.convertDate(currentDate);
-    this.newTripStop.Enddate = this.convertDate(tomorrowDate);
-    this.newTripStop.RegionID = 1;
-    this.locationService.getAllRegions().toPromise().then(r => {
-      this.allRegions = r;
-    });
-    this.locationService.getAllCountriesByRegion(this.newTripStop.RegionID).subscribe(r => {
-      this.filteredCountries = r;
-      this.newTripStop.CountryID = this.filteredCountries[0].Id;
-      this.locationService.getAllDestinationsByCountry(this.newTripStop.CountryID).subscribe(r => {
-        this.filteredDestinations = r;
-        this.newTripStop.DestinationID = this.filteredCountries[0].Id;
-      });
-    });
-  }
-
-  onCancelAddingNewTrip() {
-    this.newTripName = "";
-    this.newTripStop = this.tripService.initializeNewTripstop();
-    this.isAddAnotherTrip = false;
-    this.showOrHideEditButtons();
-  }
-
-  onSaveAddingNewTrip() {
-    // if (this.newTripName === "") {
-    //   this.isNewTripInvalidInput = true;
-    //   return;
-    // }
-    // this.isNewTripInvalidInput = false;
-    this.isAddAnotherTrip = false; 
-    this.showOrHideEditButtons();
-
-    this.newTripStop.Startdate = this.convertToDateISOString(this.newTripStop.Startdate);
-    this.newTripStop.Enddate = this.convertToDateISOString(this.newTripStop.Enddate);
-    this.newTripStop.TripID = this.currentTrip.Id;
-
-    this.tripService.saveNewTripstop(this.newTripStop).subscribe(
-      (response) => {
-        this.loadTripstops(this.currentTrip.Id);
-      },
-      (error) => {
-        console.error('An error occurred:', error);
-      }
-    );
-  }
-
-  onEditTripChangeDropdown(inputType: InputTypes, data: any) {
+  onEditTripStopChangeDropdown(inputType: InputTypes, data: any) {
     const value = parseInt(data.target.value);
     if(value === null || isNaN(value)) {
       return;
@@ -241,7 +170,59 @@ export class EditTripComponent implements OnInit {
     }
   }
 
-  onAddTripChangeDropdown(inputType: InputTypes, data: any) {
+  onSaveEditTripstop(index: number) {
+    if (new Date(this.editedTripStop.Startdate) > new Date(this.editedTripStop.Enddate)) {
+      this.isEditTripStopInvalidInput = true;
+      return;
+    }
+    this.isEditTripStopInvalidInput = false;
+    this.isEditTripStop[index] = false; 
+    this.showOrHideEditButtons();
+
+    this.editedTripStop.Startdate = this.convertToDateISOString(this.editedTripStop.Startdate);
+    this.editedTripStop.Enddate = this.convertToDateISOString(this.editedTripStop.Enddate);
+    this.currentTripStops[index] = this.editedTripStop;
+
+    this.tripService.editTripstop(this.currentTripStops[index]).subscribe(
+      (response) => {
+        this.loadTripstops(this.currentTrip.Id);
+      },
+      (error) => {
+        console.error('An error occurred:', error);
+      }
+    );
+  }
+
+  onCancelEditTripStop(index: number) {
+    this.isEditTripStop[index] = false; 
+    this.isEditTripStopInvalidInput = false;
+    this.showOrHideEditButtons();
+  }
+
+  // Add, save, cancel new trip stop destination
+  onAddNewTripStop() {
+    this.isAddNewTripstop = true;
+    this.showOrHideEditButtons();
+    const currentDate = new Date();
+    const tomorrowDate = new Date(currentDate);
+    tomorrowDate.setDate(currentDate.getDate() + 1);
+    this.newTripStop.Startdate = this.convertDate(currentDate);
+    this.newTripStop.Enddate = this.convertDate(tomorrowDate);
+    this.newTripStop.RegionID = 1;
+    this.locationService.getAllRegions().toPromise().then(r => {
+      this.allRegions = r;
+    });
+    this.locationService.getAllCountriesByRegion(this.newTripStop.RegionID).subscribe(r => {
+      this.filteredCountries = r;
+      this.newTripStop.CountryID = this.filteredCountries[0].Id;
+      this.locationService.getAllDestinationsByCountry(this.newTripStop.CountryID).subscribe(r => {
+        this.filteredDestinations = r;
+        this.newTripStop.DestinationID = this.filteredCountries[0].Id;
+      });
+    });
+  }
+
+  onAddNewTripStopChangeDropdown(inputType: InputTypes, data: any) {
     const value = parseInt(data.target.value);
     if(value === null || isNaN(value)) {
       return;
@@ -272,6 +253,36 @@ export class EditTripComponent implements OnInit {
           this.newTripStop.DestinationID = value;
           break;
     }
+  }
+
+  onSaveAddNewTripStop() {
+    if (new Date(this.newTripStop.Startdate) > new Date(this.newTripStop.Enddate)) {
+      this.isNewTripInvalidInput = true;
+      return;
+    }
+    this.isNewTripInvalidInput = false;
+    this.isAddNewTripstop = false; 
+    this.showOrHideEditButtons();
+
+    this.newTripStop.Startdate = this.convertToDateISOString(this.newTripStop.Startdate);
+    this.newTripStop.Enddate = this.convertToDateISOString(this.newTripStop.Enddate);
+    this.newTripStop.TripID = this.currentTrip.Id;
+
+    this.tripService.saveNewTripstop(this.newTripStop).subscribe(
+      (response) => {
+        this.loadTripstops(this.currentTrip.Id);
+      },
+      (error) => {
+        console.error('An error occurred:', error);
+      }
+    );
+  }
+
+  onCancelAddNewTripStop() {
+    this.newTripStop = this.tripService.initializeNewTripstop();
+    this.isAddNewTripstop = false;
+    this.isNewTripInvalidInput = false;
+    this.showOrHideEditButtons();
   }
 }
 
