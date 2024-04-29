@@ -12,8 +12,17 @@ import { Destination, Country, Region } from 'src/app/models/locationModels';
 export class EditTripComponent implements OnInit {
   currentTrip: Trip;
   currentTripStops: Tripstop[] = [];
+
   editedTrip: Trip;
   editedTripStop: Tripstop;
+  isEditTrip: boolean = false;
+  isEditTripStop: boolean[] = [];
+  isEditTripInvalidInput: boolean = false;
+
+  newTripStop: Tripstop;
+  newTripName: string = "";
+  isAddAnotherTrip: boolean = false;
+  isNewTripInvalidInput: boolean = false;
 
   allRegions: Region[] = [];
   filteredCountries: Country[] = [];
@@ -21,9 +30,7 @@ export class EditTripComponent implements OnInit {
 
   inputTypes = InputTypes;
 
-  showEditButton: boolean = true;
-  isEditTrip: boolean = false;
-  isEditTripStop: boolean[] = [];
+  showEditOrAddButtons: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,6 +40,7 @@ export class EditTripComponent implements OnInit {
     this.currentTrip = tripService.initializeNewTrip();
     this.editedTrip = tripService.initializeNewTrip();
     this.editedTripStop = tripService.initializeNewTripstop();
+    this.newTripStop = tripService.initializeNewTripstop();
   }
 
   ngOnInit(): void {
@@ -71,7 +79,10 @@ export class EditTripComponent implements OnInit {
   }
 
   showOrHideEditButtons() {
-    this.showEditButton = !this.isEditTripStop.some(x => x) && !this.isEditTrip;
+    this.showEditOrAddButtons = 
+      !this.isEditTripStop.some(x => x) && 
+      !this.isEditTrip && 
+      !this.isAddAnotherTrip;
   }
 
   onEditTrip() {
@@ -81,6 +92,12 @@ export class EditTripComponent implements OnInit {
   }
 
   onSaveTrip() {
+    if (this.editedTrip.Name === "") {
+      this.isEditTripInvalidInput = true;
+      return;
+    }
+    this.isEditTripInvalidInput = false;
+
     this.isEditTrip = false;
     this.showOrHideEditButtons();
     this.currentTrip = this.editedTrip;
@@ -139,7 +156,59 @@ export class EditTripComponent implements OnInit {
     this.showOrHideEditButtons();
   }
 
-  onInputChangeDropdown(inputType: InputTypes, data: any, index: number) {
+  onAddAnotherTrip() {
+    this.isAddAnotherTrip = true;
+    this.showOrHideEditButtons();
+    const currentDate = new Date();
+    const tomorrowDate = new Date(currentDate);
+    tomorrowDate.setDate(currentDate.getDate() + 1);
+    this.newTripStop.Startdate = this.convertDate(currentDate);
+    this.newTripStop.Enddate = this.convertDate(tomorrowDate);
+    this.newTripStop.RegionID = 1;
+    this.locationService.getAllRegions().toPromise().then(r => {
+      this.allRegions = r;
+    });
+    this.locationService.getAllCountriesByRegion(this.newTripStop.RegionID).subscribe(r => {
+      this.filteredCountries = r;
+      this.newTripStop.CountryID = this.filteredCountries[0].Id;
+      this.locationService.getAllDestinationsByCountry(this.newTripStop.CountryID).subscribe(r => {
+        this.filteredDestinations = r;
+        this.newTripStop.DestinationID = this.filteredCountries[0].Id;
+      });
+    });
+  }
+
+  onCancelAddingNewTrip() {
+    this.newTripName = "";
+    this.newTripStop = this.tripService.initializeNewTripstop();
+    this.isAddAnotherTrip = false;
+    this.showOrHideEditButtons();
+  }
+
+  onSaveAddingNewTrip() {
+    // if (this.newTripName === "") {
+    //   this.isNewTripInvalidInput = true;
+    //   return;
+    // }
+    // this.isNewTripInvalidInput = false;
+    this.isAddAnotherTrip = false; 
+    this.showOrHideEditButtons();
+
+    this.newTripStop.Startdate = this.convertToDateISOString(this.newTripStop.Startdate);
+    this.newTripStop.Enddate = this.convertToDateISOString(this.newTripStop.Enddate);
+    this.newTripStop.TripID = this.currentTrip.Id;
+
+    this.tripService.saveNewTripstop(this.newTripStop).subscribe(
+      (response) => {
+        this.loadTripstops(this.currentTrip.Id);
+      },
+      (error) => {
+        console.error('An error occurred:', error);
+      }
+    );
+  }
+
+  onEditTripChangeDropdown(inputType: InputTypes, data: any) {
     const value = parseInt(data.target.value);
     if(value === null || isNaN(value)) {
       return;
@@ -168,6 +237,39 @@ export class EditTripComponent implements OnInit {
 
       case InputTypes.Destination:
           this.editedTripStop.DestinationID = value;
+          break;
+    }
+  }
+
+  onAddTripChangeDropdown(inputType: InputTypes, data: any) {
+    const value = parseInt(data.target.value);
+    if(value === null || isNaN(value)) {
+      return;
+    }
+
+    switch(inputType) {
+      case InputTypes.Region:
+          this.newTripStop.RegionID = value;
+          this.locationService.getAllCountriesByRegion(value).toPromise().then(r => {
+            this.filteredCountries = r;
+            this.newTripStop.CountryID = this.filteredCountries[0].Id;
+            this.locationService.getAllDestinationsByCountry(this.newTripStop.CountryID).toPromise().then(r => {
+              this.filteredDestinations = r;
+              this.newTripStop.DestinationID = this.filteredDestinations[0].Id;
+            });
+          });
+          break;
+
+      case InputTypes.Country:
+          this.newTripStop.CountryID = value;
+          this.locationService.getAllDestinationsByCountry(value).toPromise().then(r => {
+            this.filteredDestinations = r;
+            this.newTripStop.DestinationID = this.filteredDestinations[0].Id;
+          });
+          break;
+
+      case InputTypes.Destination:
+          this.newTripStop.DestinationID = value;
           break;
     }
   }

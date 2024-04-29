@@ -10,12 +10,12 @@
     <!-- Trip details subheading -->
     <div class="tripDetails">
       <h3><span class="fas fa-globe icon"></span> Trip Details </h3>
-      <div *ngIf="showEditButton" class="editTripButton" (click)="onEditTrip()">
+      <div *ngIf="showEditOrAddButtons" class="editTripButton" (click)="onEditTrip()">
         Edit <span class="fa-solid fa-pen"></span>
       </div>
     </div>
 
-    <!-- Trip details edit mode = false -->
+    <!-- Trip name edit mode = false -->
     <div *ngIf="!isEditTrip">
       <div class="form-group">
         <div class="inputField">
@@ -25,14 +25,15 @@
       </div>
     </div>
 
-    <!-- Trip details edit mode = true -->
+    <!-- Trip name edit mode = true -->
     <div *ngIf="isEditTrip">
       <div class="form-group">
         <div class="inputField">
           <label>Trip Name</label>
-          <input type="text" name="tripName" [(ngModel)]="editedTrip.Name" />
+          <input type="text" name="tripName" [(ngModel)]="editedTrip.Name" [class.invalidInput]="isEditTripInvalidInput"/>
         </div>
       </div>
+      <p *ngIf="isEditTripInvalidInput" class="invalidMessage">Please enter a valid name</p>
       <div class="actionButtons" *ngIf="isEditTrip">
         <button type="submit" class="saveChanges" (click)="onSaveTrip()">Save Changes</button>
         <button class="cancel" (click)="onCancelEditingTrip()">Cancel</button>
@@ -47,7 +48,7 @@
             <span class="fas fa-map-marker icon"></span> 
             Destination {{i+1}}: {{currentTripStops[i].DestinationName}}
           </h3>
-          <div *ngIf="showEditButton" class="editTripButton" (click)="onEditTripStop(i)">
+          <div *ngIf="showEditOrAddButtons" class="editTripButton" (click)="onEditTripStop(i)">
             Edit <span class="fa-solid fa-pen"></span>
           </div>
         </div>
@@ -103,7 +104,7 @@
           <div class="form-group">
             <div class="inputField">
               <label>Region</label>
-              <select name="regionName" [ngModel]="editedTripStop.RegionID" (change)="onInputChangeDropdown(inputTypes.Region, $event, i)">
+              <select name="regionName" [ngModel]="editedTripStop.RegionID" (change)="onEditTripChangeDropdown(inputTypes.Region, $event)">
                 <option *ngFor="let region of allRegions" [value]="region.Id">{{ region.Name }}</option>
               </select>
             </div>
@@ -111,7 +112,7 @@
           <div class="form-group">
             <div class="inputField">
               <label>Country</label>
-              <select id="country" name="countryName" [ngModel]="editedTripStop.CountryID" (change)="onInputChangeDropdown(inputTypes.Country, $event, i)">
+              <select id="country" name="countryName" [ngModel]="editedTripStop.CountryID" (change)="onEditTripChangeDropdown(inputTypes.Country, $event)">
                 <option *ngFor="let country of filteredCountries" [value]="country.Id">{{ country.Name }}</option>
               </select>
             </div>
@@ -119,7 +120,7 @@
           <div class="form-group">
             <div class="inputField">
               <label>Destination</label>
-              <select id="destination" name="destinationName" [ngModel]="editedTripStop.DestinationID" (change)="onInputChangeDropdown(inputTypes.Destination, $event, i)">
+              <select id="destination" name="destinationName" [ngModel]="editedTripStop.DestinationID" (change)="onEditTripChangeDropdown(inputTypes.Destination, $event)">
                 <option *ngFor="let destination of filteredDestinations" [value]="destination.Id">{{ destination.Name }}
                 </option>
               </select>
@@ -130,13 +131,68 @@
             <button class="cancel" (click)="onCancelEditingTripStop(i)">Cancel</button>
           </div>
         </div>
-        
       </ng-container>
     </ng-container>
-  </form>
 
-  <!-- No Destination/tripstops -->
-  <div *ngIf="currentTripStops.length === 0">
-    <p>You have no destinations in this trip</p>
-  </div>
+    <!-- No Destination/tripstops -->
+    <div class="noDestinationsMessage" *ngIf="currentTripStops.length === 0">
+      <p>You have no destinations in this trip.</p>
+    </div>
+
+    <button *ngIf="showEditOrAddButtons" class="addTripstopButton" (click)="onAddAnotherTrip()">
+      {{currentTripStops.length > 0 ? 'Add another trip stop' : 'Add your first destination'}}
+    </button>
+
+    <!-- Add new Destination/tripstop -->
+    <div *ngIf="isAddAnotherTrip">
+      <div class="destinationHeader">
+        <h3>
+          <span class="fas fa-map-marker icon"></span>
+          New Destination
+        </h3>
+      </div>
+      <div class="form-group">
+        <div class="inputField">
+          <label>Start date</label>
+          <input type="date" name="startdate" [(ngModel)]="newTripStop.Startdate" min="1900-01-01" max="2100-01-01" />
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="inputField">
+          <label>End date</label>
+          <input type="date" name="enddate" [(ngModel)]="newTripStop.Enddate" min="1900-01-01" max="2100-01-01" />
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="inputField">
+          <label>Region</label>
+          <select name="regionName" [ngModel]="newTripStop.RegionID" (change)="onAddTripChangeDropdown(inputTypes.Region, $event)">
+            <option *ngFor="let region of allRegions" [value]="region.Id">{{ region.Name }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="inputField">
+          <label>Country</label>
+          <select id="country" name="countryName" [ngModel]="newTripStop.CountryID" (change)="onAddTripChangeDropdown(inputTypes.Country, $event)">
+            <option *ngFor="let country of filteredCountries" [value]="country.Id">{{ country.Name }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="inputField">
+          <label>Destination</label>
+          <select id="destination" name="destinationName" [ngModel]="newTripStop.DestinationID" (change)="onAddTripChangeDropdown(inputTypes.Destination, $event)">
+            <option *ngFor="let destination of filteredDestinations" [value]="destination.Id">{{ destination.Name }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <p *ngIf="isNewTripInvalidInput" class="invalidMessage">Error message here</p>
+      <div class="actionButtons">
+        <button type="submit" class="saveChanges" (click)="onSaveAddingNewTrip()">Save Changes</button>
+        <button class="cancel" (click)="onCancelAddingNewTrip()">Cancel</button>
+      </div>
+    </div>
+  </form>
 </div>

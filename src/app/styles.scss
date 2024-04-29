@@ -357,6 +357,15 @@ html, body {
     .icon {
       color: $brightred;
     }
+
+    input[type="text"] {
+        padding: 10px;
+        border: 1px solid $grey;
+        border-radius: 5px;
+        font-size: 16px;
+        background-color: $white;
+        width: 45%;
+    }
   }
 
   .tripDetails .icon {
@@ -403,30 +412,30 @@ html, body {
         background-color: $lightestgrey !important;
       }
     }
+  }
 
-    .invalidInput {
-      border: 1px solid $red !important;
-    }
+  .invalidInput {
+    border: 1px solid $red !important;
+  }
+  
+  .invalidMessage {
+    color: $red;
+    margin-bottom: 20px;
+    margin-top: 5px;
+  }
 
-    .invalidMessage {
-      color: $red;
-      margin-bottom: 20px;
-      margin-top: 5px;
-    }
+  button {
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
   }
 
   .actionButtons {
     margin-top: 30px;
     margin-bottom: 20px;
-
-    button {
-      border: none;
-      border-radius: 5px;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
+    
     .saveChanges {
       background-color: $lightblue;
       color: $white;
@@ -445,6 +454,21 @@ html, body {
     .cancel:hover {
       background-color: $lightgrey;
     }
+  }
+
+  .noDestinationsMessage {
+    margin-top: 20px;
+  }
+
+  .addTripstopButton {
+    background-color: $lightblue;
+    color: $white;
+    margin-right: 20px;
+    margin-top: 40px;
+  }
+
+  .addTripstopButton:hover {
+    background-color: $brightblue;
   }
 }
 // #endregion
