@@ -11,6 +11,7 @@ import { NavbarComponent } from './shared/navbar.component';
 import { AddTripDialogComponent } from './pages/myTrips/addTripDialog.component';
 import { MyTripsComponent } from './pages/myTrips/myTrips.component';
 import { EditTripComponent } from './pages/myTrips/editTrip.component';
+import { YesNoDialogComponent } from './pages/myTrips/yesNoDialog.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { EditTripComponent } from './pages/myTrips/editTrip.component';
     AddTripDialogComponent,
     EditTripComponent,
     BrowseComponent,
-    MyTripsComponent
+    MyTripsComponent,
+    YesNoDialogComponent
   ],
   imports: [
     BrowserModule,

@@ -4,6 +4,7 @@ import { TripService } from 'src/app/services/trip.service';
 import { LocationService } from 'src/app/services/location.service';
 import { Trip, Tripstop } from 'src/app/models/tripModels';
 import { Destination, Country, Region } from 'src/app/models/locationModels';
+import { GlobalHelperService } from 'src/app/services/globalHelper.service';
 
 @Component({
   selector: 'editTrip',
@@ -42,6 +43,7 @@ export class EditTripComponent implements OnInit {
     private router: Router,
     private locationService: LocationService,
     private tripService: TripService,
+    private globalHelperService: GlobalHelperService
   ) { 
     this.currentTrip = tripService.initializeNewTrip();
     this.editedTrip = tripService.initializeNewTrip();
@@ -66,24 +68,13 @@ export class EditTripComponent implements OnInit {
     this.tripService.GetAllTripstops(currentTripId).subscribe(r => {
       this.currentTripStops = r;
       this.currentTripStops.forEach(t => {
-        t.Startdate = this.convertDate(new Date(t.Startdate));
-        t.Enddate = this.convertDate(new Date(t.Enddate));
+        t.Startdate = this.globalHelperService.convertDateForInput(new Date(t.Startdate));
+        t.Enddate = this.globalHelperService.convertDateForInput(new Date(t.Enddate));
       });
     });
   }
 
-  convertDate(date: Date): string {
-    const year = date.getFullYear();
-    const month = ('0' + (date.getMonth() + 1)).slice(-2);
-    const day = ('0' + date.getDate()).slice(-2);
-    return `${year}-${month}-${day}`;
-  }
-
-  convertToDateISOString(dateString: string): string {
-    const [year, month, day] = dateString.split('-').map(Number);
-    const date = new Date(Date.UTC(year, month - 1, day));
-    return date.toISOString();
-  }
+  
 
   showOrHideAddEditDeleteButtons() {
     this.showAddEditDeleteButtons = 
@@ -232,8 +223,8 @@ export class EditTripComponent implements OnInit {
     this.isEditTripStop[index] = false; 
     this.showOrHideAddEditDeleteButtons();
 
-    this.editedTripStop.Startdate = this.convertToDateISOString(this.editedTripStop.Startdate);
-    this.editedTripStop.Enddate = this.convertToDateISOString(this.editedTripStop.Enddate);
+    this.editedTripStop.Startdate = this.globalHelperService.convertToDateISOString(this.editedTripStop.Startdate);
+    this.editedTripStop.Enddate = this.globalHelperService.convertToDateISOString(this.editedTripStop.Enddate);
     this.currentTripStops[index] = this.editedTripStop;
 
     this.tripService.editTripstop(this.currentTripStops[index]).subscribe(
@@ -259,8 +250,8 @@ export class EditTripComponent implements OnInit {
     const currentDate = new Date();
     const tomorrowDate = new Date(currentDate);
     tomorrowDate.setDate(currentDate.getDate() + 1);
-    this.newTripStop.Startdate = this.convertDate(currentDate);
-    this.newTripStop.Enddate = this.convertDate(tomorrowDate);
+    this.newTripStop.Startdate = this.globalHelperService.convertDateForInput(currentDate);
+    this.newTripStop.Enddate = this.globalHelperService.convertDateForInput(tomorrowDate);
     this.newTripStop.RegionID = 1;
     this.locationService.getAllRegions().toPromise().then(r => {
       this.allRegions = r;
@@ -317,8 +308,8 @@ export class EditTripComponent implements OnInit {
     this.isAddNewTripstop = false; 
     this.showOrHideAddEditDeleteButtons();
 
-    this.newTripStop.Startdate = this.convertToDateISOString(this.newTripStop.Startdate);
-    this.newTripStop.Enddate = this.convertToDateISOString(this.newTripStop.Enddate);
+    this.newTripStop.Startdate = this.globalHelperService.convertToDateISOString(this.newTripStop.Startdate);
+    this.newTripStop.Enddate = this.globalHelperService.convertToDateISOString(this.newTripStop.Enddate);
     this.newTripStop.TripID = this.currentTrip.Id;
 
     this.tripService.saveNewTripstop(this.newTripStop).subscribe(

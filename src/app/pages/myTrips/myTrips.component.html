@@ -21,21 +21,22 @@
         </p>
       </div>
       <div class="editTripButton" (click)="onEditTrip(trip.Id)">
-        Edit <span class="fa-solid fa-pen"></span>
+        View trip <span class="fa fa-eye"></span>
       </div>
     </div>
     
     <div *ngIf="trip.TripStops.length > 0">
       <div class="tripStop" *ngFor="let tripStop of trip.TripStops">
         <div class="leftSection">
-          <img src="assets/images/destinations/{{tripStop.DestinationImageFileName}}" width="200px" />
+          <img src="assets/images/destinations/{{tripStop.DestinationImageFileName}}" width="160px" />
         </div>
         <div class="rightSection">
           <div class="tripStopDetail">
-            <span class="fas fa-globe countryRegionIcons"></span> <p>{{tripStop.CountryName}}</p>
+            <span class="fas fa-globe tripStopIcons"></span> <p>{{tripStop.CountryName}}</p>
             <ng-container *ngIf="tripStop.CountryName !== tripStop.RegionName">
-              <span class="fas fa-globe countryRegionIcons"></span> <p>{{tripStop.RegionName}}</p>
+              <span class="fas fa-globe tripStopIcons"></span> <p>{{tripStop.RegionName}}</p>
             </ng-container>
+            <span class="fas fa-calendar tripStopIcons"></span> <p> {{tripStop.Startdate}} - {{tripStop.Enddate}}</p>
           </div>
           <h2>{{tripStop.DestinationName}}</h2>
         </div>

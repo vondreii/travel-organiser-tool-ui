@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { TripService } from 'src/app/services/trip.service';
 import { DialogService } from 'src/app/services/dialog.service';
 import { Trip, Tripstop } from 'src/app/models/tripModels';
+import { GlobalHelperService } from 'src/app/services/globalHelper.service';
 
 @Component({
   selector: 'myTrips',
@@ -21,7 +22,8 @@ export class MyTripsComponent implements OnInit {
   constructor(
     private router: Router,
     private tripService: TripService,
-    public dialogService: DialogService
+    public dialogService: DialogService,
+    private globalHelperService: GlobalHelperService
   ) { 
     this.showAddTripDialog = false;
   }
@@ -33,6 +35,13 @@ export class MyTripsComponent implements OnInit {
   loadData() {
     this.tripService.getAllTrips().subscribe(r => {
       this.allTrips = r;
+      this.allTrips.forEach(t => {
+        t.TripStops.forEach(s => {
+          s.Startdate = this.globalHelperService.convertDateForUI(new Date(s.Startdate));
+          s.Enddate = this.globalHelperService.convertDateForUI(new Date(s.Enddate));
+        });
+      });
+      this.allTrips = this.allTrips.sort((a, b) => new Date(b.CreatedDate).getTime() - new Date(a.CreatedDate).getTime())
       this.filteredTrips = this.allTrips;
     });
   }

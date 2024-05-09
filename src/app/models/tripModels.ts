@@ -1,6 +1,7 @@
 export interface Trip {
   Id: number;
   Name: string;
+  CreatedDate: string;
   NoOfDestinations: number;
   TripStops: Tripstop[]
 }

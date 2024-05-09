@@ -116,7 +116,7 @@ html, body {
 
   .tripItem {
     // box-shadow: $lightshadow 0px 3px 8px;
-    margin: 60px 0px;
+    margin: 40px 0px;
     border-radius: 2px;
     
     .tripHeader {
@@ -148,11 +148,11 @@ html, body {
     }
 
     .tripStop {
-      box-shadow: $lightshadow 0px 3px 8px;
+      box-shadow: $lightshadow 0px 3px 6px;
       background-color: $white;
       display: flex;
-      margin-bottom: 20px;
-      border-radius: 5px;
+      margin-bottom: 10px;
+      border-radius: 2px;
 
       .leftSection {
         margin-right: 20px;
@@ -173,7 +173,7 @@ html, body {
             margin-right: 6px; 
           }
 
-          .countryRegionIcons {
+          .tripStopIcons {
             color: $green;
           }
 
@@ -493,55 +493,6 @@ html, body {
   .deleteTripButton:hover {
     background-color: $brightred;
   }
-
-  .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: $shadow;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-
-    .content {
-      background-color: $white;
-      padding: 30px;
-      width: 400px;
-      text-align: center;
-      border-radius: 8px;
-      box-shadow: 0 0 10px $lightshadow;
-
-      .yesNoButtons {
-        margin-top: 20px; 
-
-        button {
-          width: 80px; 
-        }
-
-        .yes {
-          background-color: $lightblue;
-          color: $white;
-          margin-right: 20px;
-        }
-      
-        .yes:hover {
-          background-color: $brightblue;
-        }
-
-        .no {
-          background-color: $lightestgrey;
-          color: $black;
-        }
-
-        .no:hover {
-          background-color: $grey;
-        }
-      }
-    }
-  }
 }
 // #endregion
 
@@ -567,6 +518,70 @@ html, body {
   a:hover {
     text-decoration: none;
     cursor: pointer;
+  }
+}
+// #endregion
+
+// #region yes-no-dialog
+.yes-no-dialog {
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $shadow;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+
+    .content {
+      background-color: $white;
+      width: 400px;
+      text-align: center;
+      border-radius: 8px;
+      box-shadow: 0 0 10px $lightshadow;
+
+      .areYouSureHeader {
+        border-radius: 8px 8px 0px 0px;
+        padding: 20px;
+        background-color: $darkblue;
+        color: $white;
+      }
+
+      .areYouSureContent {
+        padding: 20px;
+        line-height: 20px;
+
+        .yesNoButtons {
+          margin-top: 20px;
+      
+          button {
+            width: 80px;
+          }
+        
+          .yes {
+            background-color: $lightblue;
+            color: $white;
+            margin-right: 20px;
+          }
+        
+          .yes:hover {
+            background-color: $brightblue;
+          }
+      
+          .no {
+            background-color: $lightestgrey;
+            color: $black;
+          }
+        
+          .no:hover {
+            background-color: $grey;
+          }
+        }
+      }
+    }
   }
 }
 // #endregion
