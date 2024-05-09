@@ -85,30 +85,38 @@ export class TripService {
     return this.http.post(`${this.url}/api/trip/AddTripStop`, payload);
   }
 
-  editTrip(newTrip: Trip): Observable<any> {
+  editTrip(trip: Trip): Observable<any> {
     const payload = { 
-      Id: newTrip.Id, 
-      Name: newTrip.Name
+      Id: trip.Id, 
+      Name: trip.Name
     };
     return this.http.post(`${this.url}/api/trip/EditTrip`, payload);
   }
 
-  editTripstop(newTripstop: Tripstop): Observable<any> {
+  deleteTrip(trip: Trip): Observable<any> {
     const payload = { 
-      Id: newTripstop.Id, 
-      DestinationID: newTripstop.DestinationID,
-      Startdate: newTripstop.Startdate,
-      Enddate: newTripstop.Enddate
+      Id: trip.Id, 
+      Name: trip.Name
+    };
+    return this.http.post(`${this.url}/api/trip/DeleteTrip`, payload);
+  }
+
+  editTripstop(tripstop: Tripstop): Observable<any> {
+    const payload = { 
+      Id: tripstop.Id, 
+      DestinationID: tripstop.DestinationID,
+      Startdate: tripstop.Startdate,
+      Enddate: tripstop.Enddate
     };
     return this.http.post(`${this.url}/api/trip/EditTripstop`, payload);
   }
 
-  deleteTripstop(newTripstop: Tripstop): Observable<any> {
+  deleteTripstop(tripstop: Tripstop): Observable<any> {
     const payload = { 
-      Id: newTripstop.Id, 
-      DestinationID: newTripstop.DestinationID,
-      Startdate: newTripstop.Startdate,
-      Enddate: newTripstop.Enddate
+      Id: tripstop.Id, 
+      DestinationID: tripstop.DestinationID,
+      Startdate: tripstop.Startdate,
+      Enddate: tripstop.Enddate
     };
     return this.http.post(`${this.url}/api/trip/DeleteTripstop`, payload);
   }

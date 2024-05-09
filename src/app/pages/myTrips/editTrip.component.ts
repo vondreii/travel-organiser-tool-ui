@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TripService } from 'src/app/services/trip.service';
 import { LocationService } from 'src/app/services/location.service';
 import { Trip, Tripstop } from 'src/app/models/tripModels';
@@ -21,6 +21,7 @@ export class EditTripComponent implements OnInit {
   isEditTripStop: boolean[] = [];
   isEditTripStopInvalidInput: boolean = false;
 
+  isDeleteTripDialog: boolean = false;
   isDeleteTripstopDialog: boolean = false;
   deleteTripStop: Tripstop;
 
@@ -38,6 +39,7 @@ export class EditTripComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private locationService: LocationService,
     private tripService: TripService,
   ) { 
@@ -95,6 +97,29 @@ export class EditTripComponent implements OnInit {
     this.isEditTripDetails = true;
     this.showOrHideAddEditDeleteButtons();
     this.editedTrip = { ...this.currentTrip };
+  }
+
+  onDeleteTrip() {
+    this.isDeleteTripDialog = true;
+    document.body.style.overflow = 'hidden';
+  }
+
+  onDeleteTripConfirmed() {
+    this.tripService.deleteTrip(this.currentTrip).subscribe(
+      (response) => {
+        this.isDeleteTripDialog = false;
+        document.body.style.overflow = 'unset';
+        this.router.navigate(['/myTrips']);
+      },
+      (error) => {
+        console.error('An error occurred:', error);
+      }
+    );
+  }
+
+  onDeleteTripCancelled() {
+    this.isDeleteTripDialog = false;
+    document.body.style.overflow = 'unset';
   }
 
   onSaveTripDetails() {

@@ -80,7 +80,7 @@ html, body {
 .my-trips-component {
   padding: 60px 10%;
   background-color: $lightestgrey;
-  height: 90%;
+  // height: 90%;
 
   .header {
     margin-bottom: 20px;
@@ -354,12 +354,12 @@ html, body {
         color: $brightblue;
       }
   
-      .deleteTripButton {
+      .deleteTripstopButton {
         color: $red;
         margin-right: 10px;
       }
   
-      .deleteTripButton:hover {
+      .deleteTripstopButton:hover {
         color: $brightred;
       }
     }
@@ -483,6 +483,15 @@ html, body {
 
   .addTripstopButton:hover {
     background-color: $brightblue;
+  }
+
+  .deleteTripButton {
+    background-color: $red;
+    color: $white;
+  }
+
+  .deleteTripButton:hover {
+    background-color: $brightred;
   }
 
   .overlay {
