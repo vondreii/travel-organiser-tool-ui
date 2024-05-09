@@ -21,6 +21,9 @@ export class EditTripComponent implements OnInit {
   isEditTripStop: boolean[] = [];
   isEditTripStopInvalidInput: boolean = false;
 
+  isDeleteTripstopDialog: boolean = false;
+  deleteTripStop: Tripstop;
+
   newTripStop: Tripstop;
   isAddNewTripstop: boolean = false;
   isNewTripInvalidInput: boolean = false;
@@ -31,7 +34,7 @@ export class EditTripComponent implements OnInit {
 
   inputTypes = InputTypes;
 
-  showEditOrAddButtons: boolean = true;
+  showAddEditDeleteButtons: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -41,6 +44,7 @@ export class EditTripComponent implements OnInit {
     this.currentTrip = tripService.initializeNewTrip();
     this.editedTrip = tripService.initializeNewTrip();
     this.editedTripStop = tripService.initializeNewTripstop();
+    this.deleteTripStop = tripService.initializeNewTripstop();
     this.newTripStop = tripService.initializeNewTripstop();
   }
 
@@ -79,8 +83,8 @@ export class EditTripComponent implements OnInit {
     return date.toISOString();
   }
 
-  showOrHideEditButtons() {
-    this.showEditOrAddButtons = 
+  showOrHideAddEditDeleteButtons() {
+    this.showAddEditDeleteButtons = 
       !this.isEditTripDetails &&
       !this.isEditTripStop.some(x => x) &&
       !this.isAddNewTripstop;
@@ -89,7 +93,7 @@ export class EditTripComponent implements OnInit {
   // Edit, save, cancel trip details eg name
   onEditTripDetails() {
     this.isEditTripDetails = true;
-    this.showOrHideEditButtons();
+    this.showOrHideAddEditDeleteButtons();
     this.editedTrip = { ...this.currentTrip };
   }
 
@@ -101,7 +105,7 @@ export class EditTripComponent implements OnInit {
     this.isEditTripDetailsInvalidInput = false;
 
     this.isEditTripDetails = false;
-    this.showOrHideEditButtons();
+    this.showOrHideAddEditDeleteButtons();
     this.currentTrip = this.editedTrip;
 
     this.tripService.editTrip(this.currentTrip).subscribe(
@@ -117,13 +121,13 @@ export class EditTripComponent implements OnInit {
   onCancelTripDetails() {
     this.isEditTripDetails = false;
     this.isEditTripDetailsInvalidInput = false;
-    this.showOrHideEditButtons();
+    this.showOrHideAddEditDeleteButtons();
   }
   
   // Edit, save, cancel trip stop destinations
   onEditTripStop(index: number){
     this.isEditTripStop[index] = true; 
-    this.showOrHideEditButtons();
+    this.showOrHideAddEditDeleteButtons();
     this.editedTripStop = { ...this.currentTripStops[index] };
 
     this.locationService.getAllRegions().toPromise().then(r => {
@@ -135,6 +139,30 @@ export class EditTripComponent implements OnInit {
     this.locationService.getAllDestinationsByCountry(this.editedTripStop.CountryID).subscribe(r => {
       this.filteredDestinations = r;
     });
+  }
+
+  onDeleteTripStop(index: number){
+    this.isDeleteTripstopDialog = true;
+    this.deleteTripStop = this.currentTripStops[index];
+    document.body.style.overflow = 'hidden';
+  }
+
+  onDeleteTripstopConfirmed() {
+    this.tripService.deleteTripstop(this.deleteTripStop).subscribe(
+      (response) => {
+        this.loadTripstops(this.currentTrip.Id);
+        this.isDeleteTripstopDialog = false;
+        document.body.style.overflow = 'unset';
+      },
+      (error) => {
+        console.error('An error occurred:', error);
+      }
+    );
+  }
+
+  onDeleteTripstopCancelled() {
+    this.isDeleteTripstopDialog = false;
+    document.body.style.overflow = 'unset';
   }
 
   onEditTripStopChangeDropdown(inputType: InputTypes, data: any) {
@@ -177,7 +205,7 @@ export class EditTripComponent implements OnInit {
     }
     this.isEditTripStopInvalidInput = false;
     this.isEditTripStop[index] = false; 
-    this.showOrHideEditButtons();
+    this.showOrHideAddEditDeleteButtons();
 
     this.editedTripStop.Startdate = this.convertToDateISOString(this.editedTripStop.Startdate);
     this.editedTripStop.Enddate = this.convertToDateISOString(this.editedTripStop.Enddate);
@@ -196,13 +224,13 @@ export class EditTripComponent implements OnInit {
   onCancelEditTripStop(index: number) {
     this.isEditTripStop[index] = false; 
     this.isEditTripStopInvalidInput = false;
-    this.showOrHideEditButtons();
+    this.showOrHideAddEditDeleteButtons();
   }
 
   // Add, save, cancel new trip stop destination
   onAddNewTripStop() {
     this.isAddNewTripstop = true;
-    this.showOrHideEditButtons();
+    this.showOrHideAddEditDeleteButtons();
     const currentDate = new Date();
     const tomorrowDate = new Date(currentDate);
     tomorrowDate.setDate(currentDate.getDate() + 1);
@@ -262,7 +290,7 @@ export class EditTripComponent implements OnInit {
     }
     this.isNewTripInvalidInput = false;
     this.isAddNewTripstop = false; 
-    this.showOrHideEditButtons();
+    this.showOrHideAddEditDeleteButtons();
 
     this.newTripStop.Startdate = this.convertToDateISOString(this.newTripStop.Startdate);
     this.newTripStop.Enddate = this.convertToDateISOString(this.newTripStop.Enddate);
@@ -282,7 +310,7 @@ export class EditTripComponent implements OnInit {
     this.newTripStop = this.tripService.initializeNewTripstop();
     this.isAddNewTripstop = false;
     this.isNewTripInvalidInput = false;
-    this.showOrHideEditButtons();
+    this.showOrHideAddEditDeleteButtons();
   }
 }
 

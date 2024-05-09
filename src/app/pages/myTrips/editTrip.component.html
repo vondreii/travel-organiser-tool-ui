@@ -10,8 +10,8 @@
     <!-- Trip details subheading -->
     <div class="tripDetails">
       <h3><span class="fas fa-globe icon"></span> Trip Details </h3>
-      <div *ngIf="showEditOrAddButtons" class="editTripButton" (click)="onEditTripDetails()">
-        Edit <span class="fa-solid fa-pen"></span>
+      <div *ngIf="showAddEditDeleteButtons" class="editDeleteButtons">
+        <p class="editTripButton" (click)="onEditTripDetails()"><span class="fa-solid fa-pen"></span> Edit</p>
       </div>
     </div>
 
@@ -48,8 +48,9 @@
             <span class="fas fa-map-marker icon"></span> 
             Destination {{i+1}}: {{currentTripStops[i].DestinationName}}
           </h3>
-          <div *ngIf="showEditOrAddButtons" class="editTripButton" (click)="onEditTripStop(i)">
-            Edit <span class="fa-solid fa-pen"></span>
+          <div *ngIf="showAddEditDeleteButtons" class="editDeleteButtons">
+            <p class="deleteTripButton" (click)="onDeleteTripStop(i)"><span class="fa-solid fa-trash-can"></span> Delete</p>
+            <p class="editTripButton" (click)="onEditTripStop(i)"><span class="fa-solid fa-pen"></span> Edit</p>
           </div>
         </div>
         
@@ -140,7 +141,7 @@
       <p>You have no destinations in this trip.</p>
     </div>
 
-    <button *ngIf="showEditOrAddButtons" class="addTripstopButton" (click)="onAddNewTripStop()">
+    <button *ngIf="showAddEditDeleteButtons" class="addTripstopButton" (click)="onAddNewTripStop()">
       {{currentTripStops.length > 0 ? 'Add another destination' : 'Add your first destination'}}
     </button>
 
@@ -196,4 +197,14 @@
       </div>
     </div>
   </form>
+
+  <div class="overlay" *ngIf="isDeleteTripstopDialog">
+    <div class="content">
+        <h2>Are you sure?</h2>
+        <div class="yesNoButtons">
+          <button class="yes" (click)="onDeleteTripstopConfirmed()">Yes</button>
+          <button class="no" (click)="onDeleteTripstopCancelled()">No</button>
+        </div>
+    </div>
+  </div>
 </div>

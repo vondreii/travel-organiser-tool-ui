@@ -339,15 +339,29 @@ html, body {
     display: flex;
     justify-content: space-between;
 
-    .editTripButton {
+    .editDeleteButtons {
       background: none;
       border: none;
       cursor: pointer;
-      color: $lightblue;
-    }
-
-    .editTripButton:hover {
-      color: $brightblue;
+      margin-top: 8px;
+      display: flex;
+  
+      .editTripButton {
+        color: $lightblue;
+      }
+  
+      .editTripButton:hover {
+        color: $brightblue;
+      }
+  
+      .deleteTripButton {
+        color: $red;
+        margin-right: 10px;
+      }
+  
+      .deleteTripButton:hover {
+        color: $brightred;
+      }
     }
   }
 
@@ -469,6 +483,55 @@ html, body {
 
   .addTripstopButton:hover {
     background-color: $brightblue;
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $shadow;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+
+    .content {
+      background-color: $white;
+      padding: 30px;
+      width: 400px;
+      text-align: center;
+      border-radius: 8px;
+      box-shadow: 0 0 10px $lightshadow;
+
+      .yesNoButtons {
+        margin-top: 20px; 
+
+        button {
+          width: 80px; 
+        }
+
+        .yes {
+          background-color: $lightblue;
+          color: $white;
+          margin-right: 20px;
+        }
+      
+        .yes:hover {
+          background-color: $brightblue;
+        }
+
+        .no {
+          background-color: $lightestgrey;
+          color: $black;
+        }
+
+        .no:hover {
+          background-color: $grey;
+        }
+      }
+    }
   }
 }
 // #endregion
