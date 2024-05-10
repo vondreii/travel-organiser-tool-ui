@@ -54,83 +54,101 @@
           </div>
         </div>
         
-        <!-- Destination/tripstop edit mode = false -->
-        <div *ngIf="!isEditTripStop[i]">
-          <div class="form-group">
-            <div class="inputField">
-              <label>Start date</label>
-              <input type="date" name="startdate" [value]="currentTripStops[i].Startdate" max="2100-01-01" [disabled]="true" class="disabledField" />
+        <div class="destinationContent">
+          <!-- Destination/tripstop edit mode = false -->
+          <div class="destinationImageContainer" *ngIf="!isEditTripStop[i]">
+            <img class="destinationImage" src="assets/images/destinations/{{currentTripStops[i].DestinationImageFileName}}" />
+          </div>
+          <div class="destinationForm" *ngIf="!isEditTripStop[i]">
+            <div class="form-group">
+              <div class="inputField">
+                <label>Start date</label>
+                <input type="date" name="startdate" [value]="currentTripStops[i].Startdate" max="2100-01-01" [disabled]="true"
+                  class="disabledField" />
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="inputField">
+                <label>End date</label>
+                <input type="date" name="enddate" [value]="currentTripStops[i].Enddate" max="2100-01-01" [disabled]="true"
+                  class="disabledField" />
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="inputField">
+                <label>Region</label>
+                <input type="text" name="regionName" [value]="currentTripStops[i].RegionName" [disabled]="true"
+                  class="disabledField" />
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="inputField">
+                <label>Country</label>
+                <input type="text" name="countryName" [value]="currentTripStops[i].CountryName" [disabled]="true"
+                  class="disabledField" />
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="inputField">
+                <label>Destination</label>
+                <input type="text" name="destinationName" [value]="currentTripStops[i].DestinationName" [disabled]="true"
+                  class="disabledField" />
+              </div>
             </div>
           </div>
-          <div class="form-group">
-            <div class="inputField">
-              <label>End date</label>
-              <input type="date" name="enddate" [value]="currentTripStops[i].Enddate" max="2100-01-01" [disabled]="true" class="disabledField" />
-            </div>
+          
+          <!-- Destination/tripstop edit mode = true -->
+          <div class="destinationImageContainer" *ngIf="isEditTripStop[i]">
+            <img class="destinationImage" src="assets/images/destinations/{{editedTripStop.DestinationImageFileName}}" />
           </div>
-          <div class="form-group">
-            <div class="inputField">
-              <label>Region</label>
-              <input type="text" name="regionName" [value]="currentTripStops[i].RegionName" [disabled]="true" class="disabledField" />
+          <div class="destinationForm" *ngIf="isEditTripStop[i]">
+            <div class="form-group">
+              <div class="inputField">
+                <label>Start date</label>
+                <input type="date" name="startdate" [(ngModel)]="editedTripStop.Startdate" min="1900-01-01" max="2100-01-01"
+                  [class.invalidInput]="isEditTripStopInvalidInput" />
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <div class="inputField">
-              <label>Country</label>
-              <input type="text" name="countryName" [value]="currentTripStops[i].CountryName" [disabled]="true" class="disabledField" />
+            <div class="form-group">
+              <div class="inputField">
+                <label>End date</label>
+                <input type="date" name="enddate" [(ngModel)]="editedTripStop.Enddate" min="1900-01-01" max="2100-01-01"
+                  [class.invalidInput]="isEditTripStopInvalidInput" />
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <div class="inputField">
-              <label>Destination</label>
-              <input type="text" name="destinationName" [value]="currentTripStops[i].DestinationName" [disabled]="true" class="disabledField" />
+            <div class="form-group">
+              <div class="inputField">
+                <label>Region</label>
+                <select name="regionName" [ngModel]="editedTripStop.RegionID"
+                  (change)="onEditTripStopChangeDropdown(inputTypes.Region, $event)">
+                  <option *ngFor="let region of allRegions" [value]="region.Id">{{ region.Name }}</option>
+                </select>
+              </div>
             </div>
-          </div>
-        </div>
-
-        <!-- Destination/tripstop edit mode = true -->
-        <div *ngIf="isEditTripStop[i]">
-          <div class="form-group">
-            <div class="inputField">
-              <label>Start date</label>
-              <input type="date" name="startdate" [(ngModel)]="editedTripStop.Startdate" min="1900-01-01" max="2100-01-01" [class.invalidInput]="isEditTripStopInvalidInput"/>
+            <div class="form-group">
+              <div class="inputField">
+                <label>Country</label>
+                <select id="country" name="countryName" [ngModel]="editedTripStop.CountryID"
+                  (change)="onEditTripStopChangeDropdown(inputTypes.Country, $event)">
+                  <option *ngFor="let country of filteredCountries" [value]="country.Id">{{ country.Name }}</option>
+                </select>
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <div class="inputField">
-              <label>End date</label>
-              <input type="date" name="enddate" [(ngModel)]="editedTripStop.Enddate" min="1900-01-01" max="2100-01-01" [class.invalidInput]="isEditTripStopInvalidInput"/>
+            <div class="form-group">
+              <div class="inputField">
+                <label>Destination</label>
+                <select id="destination" name="destinationName" [ngModel]="editedTripStop.DestinationID"
+                  (change)="onEditTripStopChangeDropdown(inputTypes.Destination, $event)">
+                  <option *ngFor="let destination of filteredDestinations" [value]="destination.Id">{{ destination.Name }}
+                  </option>
+                </select>
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <div class="inputField">
-              <label>Region</label>
-              <select name="regionName" [ngModel]="editedTripStop.RegionID" (change)="onEditTripStopChangeDropdown(inputTypes.Region, $event)">
-                <option *ngFor="let region of allRegions" [value]="region.Id">{{ region.Name }}</option>
-              </select>
+            <p *ngIf="isEditTripStopInvalidInput" class="invalidMessage">Please enter valid start and end date ranges</p>
+            <div class="actionButtons">
+              <button type="submit" class="saveChanges" (click)="onSaveEditTripstop(i)">Save Changes</button>
+              <button class="cancel" (click)="onCancelEditTripStop(i)">Cancel</button>
             </div>
-          </div>
-          <div class="form-group">
-            <div class="inputField">
-              <label>Country</label>
-              <select id="country" name="countryName" [ngModel]="editedTripStop.CountryID" (change)="onEditTripStopChangeDropdown(inputTypes.Country, $event)">
-                <option *ngFor="let country of filteredCountries" [value]="country.Id">{{ country.Name }}</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="inputField">
-              <label>Destination</label>
-              <select id="destination" name="destinationName" [ngModel]="editedTripStop.DestinationID" (change)="onEditTripStopChangeDropdown(inputTypes.Destination, $event)">
-                <option *ngFor="let destination of filteredDestinations" [value]="destination.Id">{{ destination.Name }}
-                </option>
-              </select>
-            </div>
-          </div>
-          <p *ngIf="isEditTripStopInvalidInput" class="invalidMessage">Please enter valid start and end date ranges</p>
-          <div class="actionButtons">
-            <button type="submit" class="saveChanges" (click)="onSaveEditTripstop(i)">Save Changes</button>
-            <button class="cancel" (click)="onCancelEditTripStop(i)">Cancel</button>
           </div>
         </div>
       </ng-container>

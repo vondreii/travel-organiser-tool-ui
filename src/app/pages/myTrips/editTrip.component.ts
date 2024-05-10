@@ -196,6 +196,7 @@ export class EditTripComponent implements OnInit {
             this.locationService.getAllDestinationsByCountry(this.editedTripStop.CountryID).toPromise().then(r => {
               this.filteredDestinations = r;
               this.editedTripStop.DestinationID = this.filteredDestinations[0].Id;
+              this.editedTripStop.DestinationImageFileName = this.filteredDestinations[0].ImageFilename;
             });
           });
           break;
@@ -205,11 +206,13 @@ export class EditTripComponent implements OnInit {
           this.locationService.getAllDestinationsByCountry(value).toPromise().then(r => {
             this.filteredDestinations = r;
             this.editedTripStop.DestinationID = this.filteredDestinations[0].Id;
+            this.editedTripStop.DestinationImageFileName = this.filteredDestinations[0].ImageFilename;
           });
           break;
 
       case InputTypes.Destination:
           this.editedTripStop.DestinationID = value;
+          this.editedTripStop.DestinationImageFileName = this.filteredDestinations[value-1].ImageFilename;
           break;
     }
   }
