@@ -212,7 +212,11 @@ export class EditTripComponent implements OnInit {
 
       case InputTypes.Destination:
           this.editedTripStop.DestinationID = value;
-          this.editedTripStop.DestinationImageFileName = this.filteredDestinations[value-1].ImageFilename;
+          const destination = this.filteredDestinations.find(x => x.Id === value);
+
+          if (destination !== undefined) {
+            this.editedTripStop.DestinationImageFileName = destination.ImageFilename;
+          }
           break;
     }
   }
@@ -265,6 +269,7 @@ export class EditTripComponent implements OnInit {
       this.locationService.getAllDestinationsByCountry(this.newTripStop.CountryID).subscribe(r => {
         this.filteredDestinations = r;
         this.newTripStop.DestinationID = this.filteredCountries[0].Id;
+        this.newTripStop.DestinationImageFileName = this.filteredDestinations[0].ImageFilename;
       });
     });
   }
@@ -284,6 +289,7 @@ export class EditTripComponent implements OnInit {
             this.locationService.getAllDestinationsByCountry(this.newTripStop.CountryID).toPromise().then(r => {
               this.filteredDestinations = r;
               this.newTripStop.DestinationID = this.filteredDestinations[0].Id;
+              this.newTripStop.DestinationImageFileName = this.filteredDestinations[0].ImageFilename;
             });
           });
           break;
@@ -293,11 +299,17 @@ export class EditTripComponent implements OnInit {
           this.locationService.getAllDestinationsByCountry(value).toPromise().then(r => {
             this.filteredDestinations = r;
             this.newTripStop.DestinationID = this.filteredDestinations[0].Id;
+            this.newTripStop.DestinationImageFileName = this.filteredDestinations[0].ImageFilename;
           });
           break;
 
       case InputTypes.Destination:
           this.newTripStop.DestinationID = value;
+          const destination = this.filteredDestinations.find(x => x.Id === value);
+
+          if (destination !== undefined) {
+            this.newTripStop.DestinationImageFileName = destination.ImageFilename;
+          }
           break;
     }
   }
