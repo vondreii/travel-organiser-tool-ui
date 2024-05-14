@@ -3,10 +3,13 @@ $darkblue: #002431;
 // $darkblue: #17182f;
 $lightblue: #0056b3;
 $brightblue: #1A72CD;
+$paleblue: #BDF6FE;
 $white: #fff;
 $lightestgrey: #f5f5f5;
 $lightgrey: #ececec;
 $grey: #e0e0e0;
+$darkgrey: #868686;
+$darkergrey: #5b5b5b;
 $red: #DC143C;
 $brightred: #E9143C;
 $green: #61e6be;
@@ -29,21 +32,26 @@ html, body {
 }
 // #endregion
 
-// #region dashboard
-.dashboard-component {
-  padding: 60px 10%;
-  background-color: $lightestgrey;
-
-  h1 {
-    margin-bottom: 20px;
-  }
-}
-// #endregion
-
 // #region browse-component
 .browse-component {
   padding: 60px 10%;
   background-color: $lightestgrey;
+
+  .filterCategories {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0px;
+
+    span {
+      color: $darkgrey;
+      text-decoration: none;
+    }
+
+    span:hover {
+      color: $darkergrey;
+      cursor: pointer;
+    }
+  }
 
   .allCountries {
     margin: 20px 0px;
@@ -518,8 +526,7 @@ html, body {
 // #region navbar-component
 .navbar-component {
   margin: 0;
-  background-color: #002431;
-  color: #fff;
+  background-color: $darkblue;
   padding: 20px 20px;
   display: flex;
   justify-content: flex-start;

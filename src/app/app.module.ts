@@ -5,7 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms'; 
 
 import { AppComponent } from './app.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { BrowseComponent } from './pages/browse/browse.component';
 import { NavbarComponent } from './shared/navbar.component';
 import { AddTripDialogComponent } from './pages/myTrips/addTripDialog.component';
@@ -17,7 +16,6 @@ import { YesNoDialogComponent } from './pages/myTrips/yesNoDialog.component';
   declarations: [
     AppComponent,
     NavbarComponent,
-    DashboardComponent,
     AddTripDialogComponent,
     EditTripComponent,
     BrowseComponent,
