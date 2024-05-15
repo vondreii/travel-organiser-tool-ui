@@ -9,7 +9,7 @@ import { LocationService } from 'src/app/services/location.service';
 export class BrowseComponent implements OnInit {
   allCountries: Country[] = [];
   pageNumbers: number[] = [];
-  take: number = 5;
+  take: number = 12;
   currentPage: number = 1;
 
   constructor(private locationService: LocationService) { }
@@ -17,7 +17,7 @@ export class BrowseComponent implements OnInit {
   ngOnInit(): void {
     this.locationService.getAllCountries(0, this.take).toPromise().then(r => {
         this.allCountries = r.Items;
-        const totalPages = Math.ceil(r.TotalCount / 5);
+        const totalPages = Math.ceil(r.TotalCount / this.take);
         this.pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
     });
   }

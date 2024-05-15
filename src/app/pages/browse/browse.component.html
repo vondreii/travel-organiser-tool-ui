@@ -15,20 +15,14 @@
       </div>
     </div>
   </div>
-
-  <div class="pagingButtons">
-    <div *ngFor="let pageNumber of pageNumbers">
-      <button (click)="loadNewCountries(pageNumber)" [ngClass]="{ 'currentPageButton': isCurrentPage(pageNumber) }">
-        {{ pageNumber }}
-      </button>
-    </div>
-  </div>
   
-  <div class="allCountries" *ngFor="let country of allCountries">
-    <p>{{country.Name}}</p>
-    <img src="assets/images/countries/{{country.ImageFilename}}" width="100px" />
-  </div>
-
+  <div class="allCountries">
+    <div class="country" *ngFor="let country of allCountries">
+      <p>{{country.Name}}</p>
+      <img src="assets/images/countries/{{country.ImageFilename}}" width="240px" height="160px" />
+    </div>
+  </div> 
+  
   <div class="pagingButtons">
     <div *ngFor="let pageNumber of pageNumbers">
       <button (click)="loadNewCountries(pageNumber)" [ngClass]="{ 'currentPageButton': isCurrentPage(pageNumber) }">

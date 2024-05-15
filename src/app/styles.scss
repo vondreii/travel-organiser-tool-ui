@@ -37,10 +37,14 @@ html, body {
   padding: 60px 10%;
   background-color: $lightestgrey;
 
+  h1 {
+    text-align: center;
+  }
+
   .filterCategories {
     display: flex;
     justify-content: space-between;
-    padding: 20px 0px;
+    padding: 20px 20px;
 
     span {
       color: $darkgrey;
@@ -54,11 +58,19 @@ html, body {
   }
 
   .allCountries {
-    margin: 20px 0px;
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .country {
+      margin: 10px 10px;
+    }
   }
 
   .pagingButtons {
     display: flex;
+    justify-content: center;
 
     button {
       padding: 5px 8px;
