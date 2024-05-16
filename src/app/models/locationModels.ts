@@ -14,7 +14,28 @@ export interface Country {
 export interface Destination {
   Id: number;
   Name: string;
+  ImageFilename: string;
   CountryID: number;
   CountryName: string;
-  ImageFilename: string;
+  PopulationTypeID: number;
+  PopulationTypeName: string;
+  ClimateTypeID: number;
+  ClimateTypeName: string;
+  TerrainTypeID: number;
+  TerrainTypeName: string;
+}
+
+export interface PopulationType {
+  Id: number;
+  Name: string;
+}
+
+export interface ClimateType {
+  Id: number;
+  Name: string;
+}
+
+export interface TerrainType {
+  Id: number;
+  Name: string;
 }

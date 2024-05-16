@@ -35,9 +35,7 @@
         <div class="rightSection">
           <div class="tripStopDetail">
             <span class="fas fa-globe tripStopIcons"></span> <p>{{tripStop.CountryName}}</p>
-            <ng-container *ngIf="tripStop.CountryName !== tripStop.RegionName">
-              <span class="fas fa-globe tripStopIcons"></span> <p>{{tripStop.RegionName}}</p>
-            </ng-container>
+            <span class="fas fa-globe tripStopIcons"></span> <p>{{tripStop.RegionName}}</p>
             <span class="fas fa-calendar tripStopIcons"></span> <p> {{tripStop.Startdate}} - {{tripStop.Enddate}}</p>
           </div>
           <h2>{{tripStop.DestinationName}}</h2>
