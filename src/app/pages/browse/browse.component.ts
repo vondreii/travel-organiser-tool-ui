@@ -9,7 +9,7 @@ import { LocationService } from 'src/app/services/location.service';
 export class BrowseComponent implements OnInit {
   allCountries: Country[] = [];
   pageNumbers: number[] = [];
-  take: number = 12;
+  take: number = 18;
   currentPage: number = 1;
 
   constructor(private locationService: LocationService) { }
