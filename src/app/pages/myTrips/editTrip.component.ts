@@ -268,7 +268,7 @@ export class EditTripComponent implements OnInit {
       this.newTripStop.CountryID = this.filteredCountries[0].Id;
       this.locationService.getAllDestinationsByCountry(this.newTripStop.CountryID).subscribe(r => {
         this.filteredDestinations = r;
-        this.newTripStop.DestinationID = this.filteredCountries[0].Id;
+        this.newTripStop.DestinationID = this.filteredDestinations[0].Id;
         this.newTripStop.DestinationImageFileName = this.filteredDestinations[0].ImageFilename;
       });
     });
