@@ -57,13 +57,13 @@ html, body {
     }
   }
 
-  .allCountries {
+  .allPageData {
     margin-top: 20px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 
-    .country {
+    .country, .destination {
       margin: 10px 10px;
     }
   }

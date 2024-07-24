@@ -15,8 +15,12 @@ export class LocationService {
         this.url = this.globalService.getServerURL();
     }
 
-    getAllDestinations() {
-      return this.http.get<any>(`${this.url}/api/location/getAllDestinations`);
+    // getAllDestinations() {
+    //   return this.http.get<any>(`${this.url}/api/location/getAllDestinations`);
+    // }
+
+    getFilteredDestinations(skip: number = 0, take: number = 5, populationTypeId: number = 0, climateTypeId: number = 0, terrainTypeId: number = 0,) {
+      return this.http.get<any>(`${this.url}/api/location/GetFilteredDestinations?skip=${skip}&take=${take}&populationTypeId=${populationTypeId}&climateTypeId=${climateTypeId}&terrainTypeId=${terrainTypeId}`);
     }
 
     getAllCountries(skip: number = 0, take: number = 5) {
